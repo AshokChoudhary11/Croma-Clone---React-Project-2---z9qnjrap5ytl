@@ -1,0 +1,11 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
+}
+.heading {
+  color: white;
+  padding: 20px 0px 20px 0px;
+  border-bottom: 1px solid gray;
+}

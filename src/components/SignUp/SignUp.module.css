@@ -1,0 +1,55 @@
+.main {
+  display: flex;
+  gap: 10px;
+  margin: 30px;
+  color: white;
+  justify-content: center;
+}
+.LogInContainer {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  width: 400px;
+  height: 400px;
+  border: 1px solid gray;
+  border-radius: 8px;
+}
+.Heading {
+  display: flex;
+  justify-content: center;
+}
+.Form {
+  display: flex;
+  flex-direction: column;
+  margin: 30px;
+  gap: 15px;
+}
+.Form input {
+  padding: 8px;
+  background-color: black;
+  border: none;
+  border-radius: 6px;
+  margin-top: -5px;
+  color: white;
+}
+.Form button {
+  padding: 8px;
+  background-color: aqua;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+}
+.Form button:hover {
+  background-color: rgb(35, 200, 200);
+}
+.error {
+  color: red;
+}
+.crossButton {
+  display: none;
+}
+@media (max-width: 768px) {
+  .main {
+    margin: 10px;
+  }
+}

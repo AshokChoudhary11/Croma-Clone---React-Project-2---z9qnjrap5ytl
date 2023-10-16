@@ -1,0 +1,108 @@
+.CartContainer {
+  color: white;
+  width: 75%;
+  margin: auto;
+}
+.allSection {
+  display: flex;
+  justify-content: space-between;
+}
+.leftSection {
+  width: 760px;
+}
+.AddressSection {
+  color: white;
+  margin: 30px 0px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 8px;
+}
+.CoupenSection {
+  color: white;
+  margin: 30px 0px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+}
+.percentIcon {
+  margin: 10px;
+}
+/* .Product {
+  color: white;
+  margin: 30px 0px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 8px;
+} */
+.OrderSummaryContainer {
+  width: 350px;
+  height: fit-content;
+  margin-top: 30px;
+  color: white;
+  padding: 15px;
+  border: 1px solid gray;
+  border-radius: 8px;
+}
+.ShippingAddressText {
+  font-size: 14px;
+}
+.Address {
+  font-size: 14px;
+}
+.OriginalPrice {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0px;
+}
+.DeliveryCharge {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0px;
+}
+.TotalPrice {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0px;
+}
+.OrderSummaryContainer button {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  background-color: aqua;
+  border: none;
+  border-radius: 8px;
+  margin-top: 25px;
+}
+.OrderSummaryContainer button:hover {
+  cursor: pointer;
+  background-color: rgb(57, 172, 172);
+}
+@media (max-width: 768px) {
+  .CartContainer {
+    color: white;
+    width: 100%;
+    margin: auto;
+  }
+  .allSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .leftSection {
+    width: 100%;
+  }
+  .OrderSummaryContainer {
+    width: 100%;
+    height: fit-content;
+    margin: 10px 0px;
+    color: white;
+    padding: 15px;
+    border: 1px solid gray;
+    border-radius: 8px;
+  }
+}
