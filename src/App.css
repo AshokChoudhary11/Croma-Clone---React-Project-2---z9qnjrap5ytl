@@ -88,4 +88,11 @@ body {
   .offer img {
     width: 180px;
   }
+  .productSection {
+    width: 100%;
+    padding: 5px;
+  }
+  .productSection h2 {
+    margin: 0px 0 8px 0;
+  }
 }
