@@ -1,11 +1,18 @@
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Style from "./CartProductCart.module.css";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import StarIcon from "@mui/icons-material/Star";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { useNavigate } from "react-router-dom";
+import { CartValue } from "../../App";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { getRandomDecimal } from "../../utils/data";
 
 const CartProductCard = ({ product, SetCartList }) => {
+  const rating = getRandomDecimal();
+  const { setCartNum } = useContext(CartValue);
   const userDetails = localStorage.getItem("userDetails");
   const parseUserDetails = JSON.parse(userDetails);
   const date = new Date();
@@ -30,12 +37,32 @@ const CartProductCard = ({ product, SetCartList }) => {
       const data = await responce.json();
       console.log(data);
       if (responce.status >= 400) {
-        alert(data.message);
+        toast.error(`{data.message}`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         return;
       } else {
         SetCartList((list) =>
           list.filter((item) => item.product._id !== product.product._id)
         );
+        setCartNum((prev) => prev - 1);
+        toast.success("Remove Successfully!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         // setList(data);
       }
     } catch (err) {
@@ -62,12 +89,32 @@ const CartProductCard = ({ product, SetCartList }) => {
       const data = await responce.json();
       console.log(data);
       if (responce.status >= 400) {
-        alert(data.message);
+        toast.error(`${data.message}`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         return;
       } else {
         SetCartList((list) =>
           list.filter((item) => item.product._id !== product.product._id)
         );
+        setCartNum((prev) => prev - 1);
+        toast.success("item added to wishList successfully!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         // setWishList(data);
       }
     } catch (err) {
@@ -84,7 +131,10 @@ const CartProductCard = ({ product, SetCartList }) => {
         <div className={Style.ProductDetailsmain}>
           <div className={Style.ProductDetails}>
             <p className={Style.ProductName}>{product.product.name}</p>
-            <div className={Style.ProductRating}>{product.product.ratings}</div>
+            <div className={Style.ProductRating}>
+              <div>{product.product.ratings}</div>
+              <StarIcon style={{ fontSize: "16px" }} />
+            </div>
 
             <div className={Style.deliveryDate}>
               <div>Standard Delivery</div>
@@ -109,6 +159,7 @@ const CartProductCard = ({ product, SetCartList }) => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

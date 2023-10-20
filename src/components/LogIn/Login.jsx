@@ -1,7 +1,10 @@
+// @ts-nocheck
 import React, { useState } from "react";
 import Style from "./Login.module.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Provider/AuthProvider";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [userName, setUserName] = useState("");
@@ -9,6 +12,8 @@ const Login = () => {
   const [error, setError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const userDetails = localStorage.getItem("userDetails");
+  const parseUserDetails = JSON.parse(userDetails);
   const navigate = useNavigate();
 
   const { user, setUser } = useAuth();
@@ -51,6 +56,18 @@ const Login = () => {
       setUser(data);
 
       navigate("/");
+      const userDetails = localStorage.getItem("userDetails");
+      const parseUserDetails = JSON.parse(userDetails);
+      toast.success(`{parseUserDetails.user.name}`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     } catch {
       setError("Something went wrong");
     }
@@ -76,7 +93,6 @@ const Login = () => {
     return password.length >= 5;
   };
 
-  const userDetails = localStorage.getItem("userDetails");
   if (userDetails) {
     return navigate(-1);
   }
@@ -108,7 +124,7 @@ const Login = () => {
               placeholder="Password"
               value={password}
               onChange={handlePasswordChange}
-              autoComplete="current-password"
+              // autoComplete="current-password"
               required
             />
             {password && <div className={Style.error}>{passwordError}</div>}
@@ -119,6 +135,7 @@ const Login = () => {
         </div>
       </div>
       <div className={Style.crossButton}>X</div>
+      <ToastContainer />
     </div>
   );
 };

@@ -5,6 +5,8 @@ import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import CheckOutProductCard from "../Cards/CheckOutProductCard";
 import AddCardIcon from "@mui/icons-material/AddCard";
 import AccountBalanceTwoToneIcon from "@mui/icons-material/AccountBalanceTwoTone";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const CheckOut = () => {
   const [cartList, SetCartList] = useState("");
@@ -72,11 +74,29 @@ const CheckOut = () => {
       const data = await responce.json();
       console.log(data);
       if (responce.status >= 400) {
-        alert(data.message);
+        toast.error(`${data.message}`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         return;
       } else {
         SetCartList("");
-        alert("Order placed Successfully!");
+        toast.success("Order Place Successfully!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       }
     } catch (err) {
       console.log(err);
@@ -206,6 +226,7 @@ const CheckOut = () => {
           <a href="#">Terms and Conditions</a>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

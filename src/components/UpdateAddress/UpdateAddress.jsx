@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import Style from "./UpdateAddress.module.css";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const UpdateAddress = () => {
   const [pincode, setPinCode] = useState("");
@@ -13,8 +15,21 @@ const UpdateAddress = () => {
     Address: Address,
   };
   const handleContinue = () => {
+    setPinCode("");
+    Setcity("");
+    setAddress("");
     localStorage.setItem("locationDetails", JSON.stringify(LocationDetails));
     navigate(-1);
+    toast.success("Address Update Successfully!", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   };
 
   return (

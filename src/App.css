@@ -35,6 +35,34 @@ body {
   color: white;
   margin: 25px 10px 0px 150px;
 }
+.offer {
+  width: 80%;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: auto;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.offer img {
+  width: 600px;
+}
+.tradingDeal {
+  width: 80%;
+  margin: auto;
+}
+.brandSection {
+  width: 80%;
+  margin: auto;
+}
+.productSection {
+  width: 80%;
+  margin: auto;
+  color: white;
+}
+.productSection h2 {
+  margin: 25px 0 15px 0;
+}
 @media (max-width: 768px) {
   .dealOfTheDayContainer {
     width: 100%;
@@ -47,5 +75,17 @@ body {
   }
   .h2tag {
     margin: 25px 10px 10px 10px;
+  }
+  .offer {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: auto;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .offer img {
+    width: 180px;
   }
 }

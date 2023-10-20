@@ -7,10 +7,14 @@ import ShareIcon from "@mui/icons-material/Share";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import StarIcon from "@mui/icons-material/Star";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { useNavigate } from "react-router-dom";
+import { getRandomDecimal } from "../../utils/data";
 
 const ProductCard = ({ product }) => {
+  const rating = getRandomDecimal();
   const [wishList, setWishList] = useState(false);
   const UserLocation = localStorage.getItem("locationDetails");
   const parseUserLocation = JSON.parse(UserLocation);
@@ -46,10 +50,29 @@ const ProductCard = ({ product }) => {
       const data = await responce.json();
       console.log(data);
       if (responce.status >= 400) {
-        alert(data.message);
+        toast.error(` ${data.message}`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         return;
       } else {
         setWishList(true);
+        toast.success("item added to wishList Successfully!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       }
     } catch (err) {
       console.log(err);
@@ -68,7 +91,7 @@ const ProductCard = ({ product }) => {
         <div className={Style.ProductDetails}>
           <p className={Style.ProductName}>{product.name}</p>
           <div className={Style.ProductRating}>
-            <div>{product.ratings}</div>
+            <div>{rating}</div>
             <StarIcon style={{ fontSize: "16px" }} />
           </div>
           <div className={Style.ProductPrice}>
@@ -91,6 +114,7 @@ const ProductCard = ({ product }) => {
           <ShareIcon style={{ cursor: "not-allowed" }} />
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

@@ -3,10 +3,6 @@ import "./App.css";
 import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-import Carousel from "./components/Carousel/Carousel.jsx";
-import CategoryList from "./components/CategoryList/index3";
-import SingleProductCard from "./components/Cards/SingleProductCard";
-import ProductCard from "./components/SingleCard/ProductCard";
 import AllProduct from "./components/AllProduct/AllProduct";
 import Home from "./components/Home";
 import SubCategory from "./components/Pages/SubCategory";
@@ -21,29 +17,36 @@ import UpdateAddress from "./components/UpdateAddress/UpdateAddress";
 import CheckOut from "./components/Pages/CheckOut";
 import FeatureUpdateSoon from "./components/FeatureUpdateSoon/FeatureUpdateSoon";
 import MyOrder from "./components/Pages/MyOrder";
-import SingleProductCart from "./components/Pages/SingleProductCart";
+import { createContext, useState } from "react";
+import BrandCategory from "./components/Pages/BrandCategory";
+
+export const CartValue = createContext();
 
 function App() {
+  const [cartnum, setCartNum] = useState(0);
+
   return (
-    <AuthProvider>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/AllProduct" element={<AllProduct />} />
-        <Route path="/subCategory/:type" element={<SubCategory />} />
-        <Route path="/Product/:productID" element={<ViewProduct />} />
-        <Route path="/signUp" element={<SignUp />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Profile" element={<Profile />} />
-        <Route path="/wishList" element={<WishList />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/udateAddress" element={<UpdateAddress />} />
-        <Route path="/checkOut" element={<CheckOut />} />
-        <Route path="/UpdateSoon" element={<FeatureUpdateSoon />} />
-        <Route path="/MyOrder" element={<MyOrder />} />
-        <Route path="/cart/:productID" element={<SingleProductCart />} />
-      </Routes>
-    </AuthProvider>
+    <CartValue.Provider value={{ cartnum, setCartNum }}>
+      <AuthProvider>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/AllProduct" element={<AllProduct />} />
+          <Route path="/subCategory/:type" element={<SubCategory />} />
+          <Route path="/Product/:productID" element={<ViewProduct />} />
+          <Route path="/signUp" element={<SignUp />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Profile" element={<Profile />} />
+          <Route path="/wishList" element={<WishList />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/udateAddress" element={<UpdateAddress />} />
+          <Route path="/checkOut" element={<CheckOut />} />
+          <Route path="/UpdateSoon" element={<FeatureUpdateSoon />} />
+          <Route path="/MyOrder" element={<MyOrder />} />
+          <Route path="/brandPage/:brand" element={<BrandCategory />} />
+        </Routes>
+      </AuthProvider>
+    </CartValue.Provider>
   );
 }
 

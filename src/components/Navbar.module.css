@@ -64,6 +64,25 @@
   gap: 40px;
   align-items: center;
 }
+.cart {
+  position: relative;
+  display: flex;
+}
+.cartnumber {
+  width: 12px;
+  font-size: 12px;
+  text-align: center;
+  height: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  position: absolute;
+  background-color: #00e9bf;
+  top: 0;
+  right: -8px;
+  color: black;
+}
 
 @media (max-width: 768px) {
   .navbar_container {

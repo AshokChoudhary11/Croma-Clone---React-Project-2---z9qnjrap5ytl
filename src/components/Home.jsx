@@ -1,43 +1,37 @@
 import React from "react";
 import Carousel from "./Carousel/Carousel";
-import CategoryList from "./CategoryList/index3.jsx";
-import SingleProductCard from "./Cards/SingleProductCard";
 import { CAROUSEL_DATA } from "./Carousel/constants";
-import Leptop from "./DealOfTheDay/Letop";
-import Mobile from "./DealOfTheDay/Mobile";
-import WashingMachine from "./DealOfTheDay/WashingMachine";
-import Oven from "./DealOfTheDay/Oven";
-import Mixer from "./DealOfTheDay/Mixer";
-import Refrigerator from "./TopTradingDeal/Refrigerator";
-import Burner from "./TopTradingDeal/Burner";
-import Tv from "./TopTradingDeal/Tv";
-import Ac from "./TopTradingDeal/Ac";
-import BluetoothSoundBar from "./TopTradingDeal/BluetoothSoundBar";
+import TrandingProduct from "./Pages/TrandingProduct";
+import Brand from "./CategoryList/Brand";
+import Categories from "./CategoryList/Categories";
+import KitchenAppliances from "./Pages/KitchenAppliances";
+import DealOnAudio from "./Pages/DealOnAudio";
 const Home = () => {
   return (
     <div>
       <Carousel data={CAROUSEL_DATA.slides} />
-      <CategoryList />
-      <h2 className="h2tag">Deal Of The Day</h2>
-      <div className="dealOfTheDayContainer">
-        <div className="dealOfTheDayProduct">
-          <Leptop />
-          <Mobile />
-          <WashingMachine />
-          <Oven />
-          <Mixer />
-        </div>
+      <div className="offer">
+        <img src="https://mouhumi-croma-clone.netlify.app/static/media/hdfc-banner.ec286e91a06140a527a8.webp" />
+        <img src="https://mouhumi-croma-clone.netlify.app/static/media/paytm.c3c162b7900e3671cc05.png" />
       </div>
-      <h2 className="h2tag">Top Tranding Deal</h2>
-
-      <div className="dealOfTheDayContainer">
-        <div className="dealOfTheDayProduct">
-          <Refrigerator />
-          <Burner />
-          <Tv />
-          <Ac />
-          <BluetoothSoundBar />
-        </div>
+      <div className="productSection">
+        <Categories />
+      </div>
+      <div className="productSection">
+        <h2>Top Tranding Deal</h2>
+        <TrandingProduct />
+      </div>
+      <div className="productSection">
+        <h2>Kitchen Appliances</h2>
+        <KitchenAppliances />
+      </div>
+      <div className="productSection">
+        <h2>Brands</h2>
+        <Brand />
+      </div>
+      <div className="productSection">
+        <h2>Deal on Audio</h2>
+        <DealOnAudio />
       </div>
     </div>
   );

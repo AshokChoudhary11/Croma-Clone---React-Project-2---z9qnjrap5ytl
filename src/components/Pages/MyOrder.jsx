@@ -38,11 +38,31 @@ const MyOrder = () => {
 
   return (
     <div className={Style.mainContainer}>
-      <h2 className={Style.heading}>My Orders</h2>
-      {orderList &&
-        orderList.map((product, index) => (
-          <OrderListCard product={product} key={index} />
-        ))}
+      {orderList.length > 0 ? (
+        <>
+          <h2 className={Style.heading}>My Orders</h2>
+          {orderList &&
+            orderList.map((product, index) => (
+              <OrderListCard product={product} key={index} />
+            ))}
+        </>
+      ) : (
+        <>
+          <h2>Your Cart</h2>
+          <div className={Style.mainContainer}>
+            <img
+              src="https://media-ik.croma.com/prod/https://media.croma.com/image/upload/f_auto,q_auto,d_Croma%20Assets:No_image.png/Croma%20Assets/UI%20Assets/sshz69afrixwivcsgnpx.svg"
+              alt="Empty OrderList Image"
+            />
+            <div className={Style.info}>
+              <div>No Order History Available</div>
+              <div className={Style.innerInfo}>
+                <a href="/">Continue Shopping</a>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

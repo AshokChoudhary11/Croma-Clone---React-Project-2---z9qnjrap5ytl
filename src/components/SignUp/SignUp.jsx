@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Style from "./SignUp.module.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Provider/AuthProvider";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUp = () => {
   const [userName, setUserName] = useState("");
@@ -65,6 +67,16 @@ const SignUp = () => {
       }
       localStorage.setItem("userDetails", JSON.stringify(data));
       setUser(data);
+      toast.success("SignUp successfully!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
 
       navigate(-1);
     } catch {
@@ -119,7 +131,8 @@ const SignUp = () => {
           <a href="/login">Already have an account?</a>
         </div>
       </div>
-      <div className={Style.crossButton}>X</div>
+      {/* <div className={Style.crossButton}>X</div> */}
+      <ToastContainer />
     </div>
   );
 };

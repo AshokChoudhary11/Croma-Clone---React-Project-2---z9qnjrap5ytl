@@ -2,11 +2,12 @@
 import React, { useEffect, useState } from "react";
 import Style from "./Cart.module.css";
 import PercentIcon from "@mui/icons-material/Percent";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import CartProductCard from "../Cards/CartProductCard";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const [cartList, SetCartList] = useState("");
+  const [cartList, SetCartList] = useState([]);
   const [allData, setAllData] = useState({});
   const userDetails = localStorage.getItem("userDetails");
   const parseUserDetails = JSON.parse(userDetails);
@@ -52,50 +53,79 @@ const Cart = () => {
 
   return (
     <div className={Style.CartContainer}>
-      <h2>Your Cart</h2>
-      <div className={Style.allSection}>
-        <div className={Style.leftSection}>
-          <div className={Style.AddressSection} onClick={toUpdateAddress}>
-            <div className={Style.ShippingAddressText}>Shipping Address</div>
-            <h3>Home</h3>
-            <div className={Style.Address}>
-              {parseUserLocation?.Address}
-              {parseUserLocation?.State}
-              {parseUserLocation?.Pincode}
+      {cartList.length > 0 ? (
+        <>
+          <h2>Your Cart</h2>
+          <div className={Style.allSection}>
+            <div className={Style.leftSection}>
+              <div className={Style.AddressSection} onClick={toUpdateAddress}>
+                <div className={Style.ShippingAddressText}>
+                  Shipping Address
+                </div>
+                <h3>Home</h3>
+                <div className={Style.Address}>
+                  {parseUserLocation?.Address}
+                  {parseUserLocation?.State}
+                  {parseUserLocation?.Pincode}
+                </div>
+              </div>
+              <div className={Style.CoupenSection}>
+                <PercentIcon className={Style.percentIcon} />
+                Apply Coupon
+              </div>
+              <div className={Style.Product}>
+                {cartList &&
+                  cartList?.map((product, index) => (
+                    <CartProductCard
+                      product={product}
+                      key={index}
+                      SetCartList={SetCartList}
+                    />
+                  ))}
+              </div>
+            </div>
+            <div className={Style.OrderSummaryContainer}>
+              <h3>Order Summary ({allData?.data?.items?.length} item)</h3>
+              <div className={Style.OriginalPrice}>
+                <div>Original Price</div>
+                <div className={Style.ProductPrice}>
+                  <CurrencyRupeeIcon style={{ fontSize: "16px" }} />
+                  {allData?.data?.totalPrice}.00
+                </div>
+              </div>
+              <div className={Style.DeliveryCharge}>
+                <div>Delivery</div>
+                <div>Free</div>
+              </div>
+              <div className={Style.TotalPrice}>
+                <div>Total</div>
+                <div className={Style.ProductPrice}>
+                  <CurrencyRupeeIcon style={{ fontSize: "16px" }} />
+                  {allData?.data?.totalPrice}.00
+                </div>
+              </div>
+              <button onClick={toCheckOut}>Check Out</button>
             </div>
           </div>
-          <div className={Style.CoupenSection}>
-            <PercentIcon className={Style.percentIcon} />
-            Apply Coupon
+        </>
+      ) : (
+        <>
+          <h2>Your Cart</h2>
+          <div className={Style.mainContainer}>
+            <img
+              src="https://mouhumi-croma-clone.netlify.app/static/media/emptyCart.902a230807b6137f4b24.webp"
+              alt="Empty Cart Image"
+            />
+            <div className={Style.info}>
+              <div>Oops! Your cart is empty</div>
+              <div className={Style.innerInfo}>
+                Add to cart from your wishlist or
+                <a href="/">Continue Shopping</a>
+              </div>
+            </div>
           </div>
-          <div className={Style.Product}>
-            {cartList &&
-              cartList?.map((product, index) => (
-                <CartProductCard
-                  product={product}
-                  key={index}
-                  SetCartList={SetCartList}
-                />
-              ))}
-          </div>
-        </div>
-        <div className={Style.OrderSummaryContainer}>
-          <h3>Order Summary ({allData?.data?.items?.length} item)</h3>
-          <div className={Style.OriginalPrice}>
-            <div>Original Price</div>
-            <div>{allData?.data?.totalPrice}</div>
-          </div>
-          <div className={Style.DeliveryCharge}>
-            <div>Delivery</div>
-            <div>Free</div>
-          </div>
-          <div className={Style.TotalPrice}>
-            <div>Total</div>
-            <div>{allData?.data?.totalPrice}</div>
-          </div>
-          <button onClick={toCheckOut}>Check Out</button>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };

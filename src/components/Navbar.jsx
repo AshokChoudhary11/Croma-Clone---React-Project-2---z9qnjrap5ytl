@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import style from "./Navbar.module.css";
 import SearchIcon from "@mui/icons-material/Search";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -8,14 +8,19 @@ import PersonIcon from "@mui/icons-material/Person";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Menu from "./MenuInNevbar/Menu.jsx";
 import { useNavigate } from "react-router-dom";
+import { CartValue } from "../App";
 
 function Navbar() {
+  const { cartnum, setCartNum } = useContext(CartValue);
+
   const navigate = useNavigate();
   const UserLocation = localStorage.getItem("locationDetails");
   const parseUserLocation = JSON.parse(UserLocation);
   const userDetails = localStorage.getItem("userDetails");
   const parseUserDetails = JSON.parse(userDetails);
   console.log(parseUserLocation);
+  console.log("userdata", parseUserDetails);
+
   const toHome = () => {
     navigate("/");
   };
@@ -36,6 +41,32 @@ function Navbar() {
   const customIconStyle = {
     fontSize: "16px",
   };
+  const getCartItemNumber = async () => {
+    try {
+      const responce = await fetch(
+        `https://academics.newtonschool.co/api/v1/ecommerce/cart`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${parseUserDetails.token}`,
+            projectId: "z9qnjrap5ytl",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const parseData = await responce.json();
+      if (responce.status >= 400) {
+        console.log(parseData.message || "Product not Found");
+        return;
+      }
+      setCartNum(parseData?.data?.items.length);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getCartItemNumber();
+  }, []);
   const [searchValue, setSearchValue] = useState("");
 
   return (
@@ -51,11 +82,25 @@ function Navbar() {
             <Menu />
           </div>
           <div className={style.inputfield}>
-            <input
-              placeholder="What are you looking for ?"
-              onChange={(e) => setSearchValue(e.target.value)}
-              value={searchValue}
-            />
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const newSearchParams = new URLSearchParams(
+                  document.location.search
+                );
+                newSearchParams.set("product_name", searchValue);
+                navigate({
+                  pathname: "/allProduct",
+                  search: newSearchParams.toString(),
+                });
+              }}
+            >
+              <input
+                placeholder="What are you looking for ?"
+                onChange={(e) => setSearchValue(e.target.value)}
+                value={searchValue}
+              />
+            </form>
             <SearchIcon
               className={style.searchIcon}
               onClick={() => {
@@ -81,8 +126,9 @@ function Navbar() {
           <div>
             <PersonIcon className={style.UserIcon} onClick={toProfile} />
           </div>
-          <div>
+          <div className={style.cart}>
             <ShoppingCartIcon onClick={toCart} />
+            <p className={style.cartnumber}>{cartnum}</p>
           </div>
         </div>
       </div>

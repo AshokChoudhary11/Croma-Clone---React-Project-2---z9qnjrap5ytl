@@ -1,7 +1,6 @@
 // @ts-nocheck
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Style from "./ViewProduct.module.css";
-import Rating from "@mui/material/Rating";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
@@ -9,12 +8,18 @@ import StoreIcon from "@mui/icons-material/Store";
 import StarIcon from "@mui/icons-material/Star";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { useNavigate, useParams } from "react-router-dom";
+import { CartValue } from "../../App";
+import { getRandomDecimal } from "../../utils/data";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ViewProduct = () => {
+  const rating = getRandomDecimal();
+  const { setCartNum } = useContext(CartValue);
   const [Product, setProduct] = useState();
   const [wishList, setWishList] = useState(false);
   const [showMore, setShowMore] = useState(false);
-  const [rating, setRating] = useState(3.5); // Initial rating value
+  // const [rating, setRating] = useState(3.5); // Initial rating value
   const [Review, setReview] = useState([]);
   const userDetails = localStorage.getItem("userDetails");
   const parseUserDetails = JSON.parse(userDetails);
@@ -40,7 +45,7 @@ const ViewProduct = () => {
     setProduct(parseData.data);
     // setRating(parseData.data.ratings); // Set the initial rating
     setReview(parseData.data.reviews);
-    console.log(parseData.data);
+    // console.log(parseData.data);
   };
   const AddWishList = async (e) => {
     e.stopPropagation();
@@ -67,17 +72,35 @@ const ViewProduct = () => {
       const data = await responce.json();
       console.log(data);
       if (responce.status >= 400) {
-        alert(data.message);
+        toast.error(`${data.message}`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         return;
       } else {
         setWishList(true);
+        toast.success("item added to wishList successfully!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       }
     } catch (err) {
       console.log(err);
     }
   };
-  const AddtoCart = async (e) => {
-    // e.stopPropagation();
+  const AddtoCart = async () => {
     try {
       if (!parseUserDetails || !parseUserDetails.token) {
         navigate("/login");
@@ -98,23 +121,66 @@ const ViewProduct = () => {
         const data = await responce.json();
         console.log(data);
         if (responce.status >= 400) {
-          alert(data.message);
+          toast.error(`item already in cart`, {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
           return;
         } else {
-          alert("add Successfully!");
+          setCartNum((prev) => prev + 1);
+          toast.success("item added to cart successfully!", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         }
       }
     } catch (err) {
       console.log(err);
     }
   };
-  const BuyNow = () => {
-    if (!parseUserDetails || !parseUserDetails.token) {
-      navigate("/login");
-      console.log("User details or token not found.");
-      return;
-    } else {
-      navigate(`/Cart/${Product._id}`);
+  const BuyNow = async () => {
+    try {
+      if (!parseUserDetails || !parseUserDetails.token) {
+        navigate("/login");
+        console.log("User details or token not found.");
+        return;
+      } else {
+        const responce = await fetch(
+          `https://academics.newtonschool.co/api/v1/ecommerce/cart/${Product._id} `,
+          {
+            method: "PATCH",
+            headers: {
+              Authorization: `Bearer ${parseUserDetails.token}`,
+              projectId: "z9qnjrap5ytl",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await responce.json();
+        console.log(data);
+        if (responce.status >= 400) {
+          // alert(data.message);
+          navigate("/cart");
+          return;
+        } else {
+          setCartNum((prev) => prev + 1);
+          navigate("/cart");
+        }
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
   const AddReview = async (e) => {
@@ -208,9 +274,9 @@ const ViewProduct = () => {
               icon={<StarIcon style={{ color: "yellow" }} />}
             /> */}
             <div className={Style.ProductRating}>
-              <div>{Product.ratings}</div>
+              <div>{rating}</div>
               <StarIcon style={{ fontSize: "16px" }} />
-              <div>({Product.reviews.length}Reviews)</div>
+              {/* <div>({Product.reviews.length}Reviews)</div> */}
             </div>
             <div className={Style.ProductPrice}>
               <CurrencyRupeeIcon />
@@ -267,7 +333,7 @@ const ViewProduct = () => {
               <select
                 name="Rating"
                 id="rating"
-                onChange={(e) => setRating(e.target.value)}
+                // onChange={(e) => setRating(e.target.value)}
               >
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -278,7 +344,7 @@ const ViewProduct = () => {
             </div>
             <textarea
               placeholder="Write a Review"
-              onChange={(e) => setReview(e.target.value)}
+              // onChange={(e) => setReview(e.target.value)}
             />
             <button className={Style.SubmitReview}>Submit</button>
           </div>
@@ -296,6 +362,7 @@ const ViewProduct = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

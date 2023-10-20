@@ -9,11 +9,14 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import ImportantDevicesOutlinedIcon from "@mui/icons-material/ImportantDevicesOutlined";
 import SmsFailedOutlinedIcon from "@mui/icons-material/SmsFailedOutlined";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
   const navigate = useNavigate();
   const userDetails = localStorage.getItem("userDetails");
   const parseUserDetails = JSON.parse(userDetails);
+
   const toWishList = () => {
     if (!parseUserDetails || !parseUserDetails.token) {
       navigate("/login");
@@ -32,12 +35,24 @@ const Profile = () => {
       navigate("/MyOrder");
     }
   };
+  const gotoUpdateSoon = () => {
+    navigate("/UpdateSoon");
+  };
   const handleLogOut = () => {
     localStorage.removeItem("userDetails");
     if (localStorage.getItem("userDetails")) {
       alert("Logout Successfully");
     } else {
-      alert("Please Login");
+      toast.success("Logout Successfully!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
   };
 
@@ -48,7 +63,7 @@ const Profile = () => {
         <button onClick={handleLogOut}>Logout</button>
       </div>
       <div className={Style.detailSection}>
-        <div className={Style.Container}>
+        <div className={Style.Container} onClick={gotoUpdateSoon}>
           <div className={Style.icon}>
             <AccountCircleOutlinedIcon />
           </div>
@@ -57,7 +72,7 @@ const Profile = () => {
             <div className={Style.about}>Edit your basic details</div>
           </div>
         </div>
-        <div className={Style.Container}>
+        <div className={Style.Container} onClick={gotoUpdateSoon}>
           <div className={Style.icon}>
             <AssignmentIndOutlinedIcon />
           </div>
@@ -77,7 +92,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div className={Style.Container}>
+        <div className={Style.Container} onClick={gotoUpdateSoon}>
           <div className={Style.icon}>
             <EmojiEventsOutlinedIcon />
           </div>
@@ -99,7 +114,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div className={Style.Container}>
+        <div className={Style.Container} onClick={gotoUpdateSoon}>
           <div className={Style.icon}>
             <ImportantDevicesOutlinedIcon />
           </div>
@@ -108,7 +123,7 @@ const Profile = () => {
             <div className={Style.about}>Manage your devices and plans</div>
           </div>
         </div>
-        <div className={Style.Container}>
+        <div className={Style.Container} onClick={gotoUpdateSoon}>
           <div className={Style.icon}>
             <SmsFailedOutlinedIcon />
           </div>
@@ -120,6 +135,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
