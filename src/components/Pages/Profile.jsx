@@ -35,6 +35,9 @@ const Profile = () => {
       navigate("/MyOrder");
     }
   };
+  const gotomyProfile = () => {
+    navigate("/Profile/edit-Profile");
+  };
   const gotoUpdateSoon = () => {
     navigate("/UpdateSoon");
   };
@@ -63,7 +66,7 @@ const Profile = () => {
         <button onClick={handleLogOut}>Logout</button>
       </div>
       <div className={Style.detailSection}>
-        <div className={Style.Container} onClick={gotoUpdateSoon}>
+        <div className={Style.Container} onClick={gotomyProfile}>
           <div className={Style.icon}>
             <AccountCircleOutlinedIcon />
           </div>

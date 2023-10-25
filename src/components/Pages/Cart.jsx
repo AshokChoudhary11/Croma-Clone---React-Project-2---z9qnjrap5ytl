@@ -5,6 +5,8 @@ import PercentIcon from "@mui/icons-material/Percent";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import CartProductCard from "../Cards/CartProductCard";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Cart = () => {
   const [cartList, SetCartList] = useState([]);
@@ -30,7 +32,16 @@ const Cart = () => {
       const parseData = await responce.json();
       // console.log(parseData.data);
       if (responce.status >= 400) {
-        console.log(parseData.message || "Product not Found");
+        toast.error(`{data.message}`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         return;
       }
       SetCartList(parseData?.data?.items);
@@ -41,6 +52,39 @@ const Cart = () => {
       console.log(err);
     }
   };
+  // const handleclearall = async () => {
+  //   try {
+  //     const responce = await fetch(
+  //       "https://academics.newtonschool.co/api/v1/ecommerce/cart/",
+  //       {
+  //         method: "DELETE",
+  //         headers: {
+  //           Authorization: `Bearer ${parseUserDetails.token}`,
+  //           projectId: "z9qnjrap5ytl",
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     const parseData = await responce.json();
+  //     console.log("parseData", parseData);
+  //     if (responce.status >= 400) {
+  //       console.log(parseData.message || "Product not Found");
+  //       return;
+  //     }
+  //     toast.success("Remove all product from cart Successfully!", {
+  //       position: "top-center",
+  //       autoClose: 5000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "dark",
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   useEffect(() => {
     getAllProduct();
   }, []);
@@ -105,6 +149,7 @@ const Cart = () => {
                 </div>
               </div>
               <button onClick={toCheckOut}>Check Out</button>
+              {/* <button onClick={handleclearall}>clear all</button> */}
             </div>
           </div>
         </>
@@ -126,6 +171,7 @@ const Cart = () => {
           </div>
         </>
       )}
+      <ToastContainer />
     </div>
   );
 };

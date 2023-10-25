@@ -1,11 +1,15 @@
 import React from "react";
 import Carousel from "./Carousel/Carousel";
 import { CAROUSEL_DATA } from "./Carousel/constants";
-import TrandingProduct from "./Pages/TrandingProduct";
 import Brand from "./CategoryList/Brand";
 import Categories from "./CategoryList/Categories";
+import TrandingProduct from "./DealsOnCroma/TrandingProduct";
 import KitchenAppliances from "./Pages/KitchenAppliances";
-import DealOnAudio from "./Pages/DealOnAudio";
+import Footer from "./Footer";
+import ProductBanner from "./ItemBanner/ProductBanner";
+import DealOnLeptop from "./DealsOnCroma/DealOnLeptop";
+import DealOnAc from "./DealsOnCroma/DealOnAc";
+import DealOnAudio from "./DealsOnCroma/DealOnAudio";
 const Home = () => {
   return (
     <div>
@@ -26,13 +30,27 @@ const Home = () => {
         <KitchenAppliances />
       </div>
       <div className="productSection">
-        <h2>Brands</h2>
-        <Brand />
+        <h2>Apple at Croma</h2>
+        <ProductBanner />
       </div>
       <div className="productSection">
         <h2>Deal on Audio</h2>
         <DealOnAudio />
       </div>
+      <div className="productSection">
+        <h2>Brands</h2>
+        <Brand />
+      </div>
+      <div className="productSection">
+        <h2>Deal on Leptop</h2>
+        <DealOnLeptop />
+      </div>
+      <div className="productSection">
+        <h2>Deal on Ac</h2>
+        <DealOnAc />
+      </div>
+
+      <Footer />
     </div>
   );
 };

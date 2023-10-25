@@ -64,6 +64,8 @@
 }
 .ProductPrice {
   font-size: 25px;
+  display: flex;
+  align-items: center;
 }
 .tex {
   font-size: 12px;
@@ -77,10 +79,22 @@
 }
 .KeyFeatures {
   width: 100%;
-  border: 1px solid gray;
-  border-radius: 8px;
   margin-top: 10px;
-  padding: 10px;
+  padding: 10px 0 10px 30px;
+  border: 1px solid rgb(66, 66, 66);
+  border-radius: 6px;
+  text-align: left;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  /* font-weight: 600; */
+  color: rgb(255, 255, 255);
+}
+.KeyFeatures p {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+.KeyFeatures ul li {
+  margin-bottom: 0.5rem;
 }
 .Description {
   width: 100%;
@@ -151,6 +165,17 @@ textarea {
   border-radius: 5px;
   background-color: gray;
   margin: 5px auto -15px auto;
+}
+.careImg {
+  margin: 10px 0;
+  /* margin-bottom: 1rem; */
+  height: 85px;
+  width: 100%;
+  background-image: url("https://media-ik.croma.com/prod/https://media.croma.com/image/upload/v1696487707/Croma%20Assets/CMS/Zipcare/PDP_ZipCare_555_4oct2023_gu1cih.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 6px;
 }
 @media (max-width: 768px) {
   .ViewProductContainer {
@@ -223,6 +248,13 @@ textarea {
     border-radius: 8px;
     padding: 10px;
     /* margin: 15px 100px 10px 10px; */
+  }
+  .KeyFeatures ul li {
+    margin-left: 1rem;
+  }
+  .careImg {
+    width: 95%;
+    margin: 10px auto 0 auto;
   }
   .Description {
     width: 100%;

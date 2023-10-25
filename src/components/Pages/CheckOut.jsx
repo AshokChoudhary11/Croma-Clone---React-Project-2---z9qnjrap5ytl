@@ -7,6 +7,7 @@ import AddCardIcon from "@mui/icons-material/AddCard";
 import AccountBalanceTwoToneIcon from "@mui/icons-material/AccountBalanceTwoTone";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const CheckOut = () => {
   const [cartList, SetCartList] = useState("");
@@ -16,6 +17,7 @@ const CheckOut = () => {
   const parseUserDetails = JSON.parse(userDetails);
   const UserLocation = localStorage.getItem("locationDetails");
   const parseUserLocation = JSON.parse(UserLocation);
+  const navigate = useNavigate();
   const getAllProduct = async () => {
     try {
       const responce = await fetch(
@@ -102,6 +104,9 @@ const CheckOut = () => {
       console.log(err);
     }
   };
+  const gotofeatureUpdate = () => {
+    navigate("/UpdateSoon");
+  };
   return (
     <div className={Style.ContentWrraper}>
       <div className={Style.leftSection}>
@@ -119,11 +124,11 @@ const CheckOut = () => {
                 <AddCardIcon style={{ color: "aqua" }} />
                 Credit/Debit Cards
               </div>
-              <div className={Style.creditOptions}>
+              <div className={Style.creditOptions} onClick={gotofeatureUpdate}>
                 <span>%</span>
                 Pay in EMI
               </div>
-              <div className={Style.creditOptions}>
+              <div className={Style.creditOptions} onClick={gotofeatureUpdate}>
                 <AccountBalanceTwoToneIcon style={{ color: "aqua" }} />
                 NetBanking
               </div>
@@ -132,11 +137,15 @@ const CheckOut = () => {
               <div className={Style.optionHeading}>
                 Enter Debit/ Credit Card Details
               </div>
-              <form className={Style.CardContainer}>
+              <form
+                className={Style.CardContainer}
+                onSubmit={MaltipalProductPaynow}
+              >
                 <div>Card Number</div>
                 <input
                   className={Style.CardNumber}
-                  placeholder="Enter card number here"
+                  placeholder="Enter 16 digit card number"
+                  pattern="[0-9]{16}"
                   required
                   onChange={setCardNumber}
                 />
@@ -146,6 +155,7 @@ const CheckOut = () => {
                     <input
                       className={Style.detailInput}
                       placeholder="MM/YY"
+                      pattern="\d{2}\/\d{4}"
                       required
                     />
                   </div>
@@ -154,15 +164,12 @@ const CheckOut = () => {
                     <input
                       className={Style.detailInput}
                       placeholder="CVV"
+                      pattern="[0-9]{3}"
                       required
                     />
                   </div>
                 </div>
-                <button
-                  type="submit"
-                  className={Style.PlaceOrderButton}
-                  onClick={MaltipalProductPaynow}
-                >
+                <button type="submit" className={Style.PlaceOrderButton}>
                   Place Order & Pay
                 </button>
               </form>

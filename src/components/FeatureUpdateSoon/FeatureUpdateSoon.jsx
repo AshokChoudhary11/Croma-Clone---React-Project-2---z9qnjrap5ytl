@@ -5,13 +5,13 @@ import { useNavigate } from "react-router-dom";
 const FeatureUpdateSoon = () => {
   const navigate = useNavigate();
   const gotoHome = () => {
-    navigate("/");
+    navigate(-1);
   };
   return (
     <div className={Style.mainContainer}>
       <div className={Style.contains}>Feature Update Soon</div>
       <button className={Style.BackButton} onClick={gotoHome}>
-        Go to Home
+        Back
       </button>
     </div>
   );

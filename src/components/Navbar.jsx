@@ -66,7 +66,7 @@ function Navbar() {
   };
   useEffect(() => {
     getCartItemNumber();
-  }, []);
+  }, [cartnum]);
   const [searchValue, setSearchValue] = useState("");
 
   return (

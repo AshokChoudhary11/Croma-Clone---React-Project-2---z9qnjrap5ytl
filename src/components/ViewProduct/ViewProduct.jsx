@@ -279,8 +279,8 @@ const ViewProduct = () => {
               {/* <div>({Product.reviews.length}Reviews)</div> */}
             </div>
             <div className={Style.ProductPrice}>
-              <CurrencyRupeeIcon />
-              {Product.price}.00
+              <CurrencyRupeeIcon style={{ fontSize: "18px" }} />
+              <div> {Product.price}.00</div>
             </div>
             <div className={Style.tex}>(Incl. all Texes)</div>
             <div className={Style.deliveryAddress}>
@@ -293,13 +293,14 @@ const ViewProduct = () => {
               </div>
             </div>
             <div className={Style.KeyFeatures}>
-              Key Features
-              <div>
-                {Product.features.map((item) => (
-                  <div>{item}</div>
-                ))}
-              </div>
+              <p>Key Features</p>
+              <ul>
+                {Product.features.map((item, idx) => {
+                  return <li key={idx}>{item}</li>;
+                })}
+              </ul>
             </div>
+            <div className={Style.careImg}></div>
             <div className={Style.button}>
               <button onClick={BuyNow}>Buy now</button>
               <button onClick={AddtoCart}>Add to cart</button>

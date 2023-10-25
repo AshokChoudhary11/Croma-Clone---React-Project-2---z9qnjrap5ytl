@@ -1,19 +1,15 @@
 // @ts-nocheck
 import React, { useEffect, useState } from "react";
 import Style from "./WishList.module.css";
-// import { useNavigate } from "react-router-dom";
 import WishListProductCard from "../Cards/WishListProductCard";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const WishList = ({ product }) => {
   const [List, setList] = useState();
-  //   const Navigate = useNavigate();
-  //   const toViewProduct = () => {
-  //     Navigate(`/Product/${product._id}`);
-  //   };
   const userDetails = localStorage.getItem("userDetails");
   const parseUserDetails = JSON.parse(userDetails);
-  const DeleteWishList = async (e) => {
-    // e.stopPropagation();
+  const DeleteWishList = async () => {
     try {
       const responce = await fetch(
         "https://academics.newtonschool.co/api/v1/ecommerce/wishlist/",
@@ -29,18 +25,35 @@ const WishList = ({ product }) => {
       const data = await responce.json();
       console.log(data);
       if (responce.status >= 400) {
-        alert(data.message);
+        toast.error(`{data.message}`, {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         return;
       } else {
         setList("");
-        // alert("All Product Remove to WishList Successfully");
+        toast.success("Remove all product from WishList Successfully!", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       }
     } catch (err) {
       console.log(err);
     }
   };
-  const GetWishList = async (e) => {
-    // e.stopPropagation();
+  const GetWishList = async () => {
     try {
       const responce = await fetch(
         "https://academics.newtonschool.co/api/v1/ecommerce/wishlist/",
@@ -84,6 +97,7 @@ const WishList = ({ product }) => {
             key={index}
           />
         ))}
+      <ToastContainer />
     </div>
   );
 };

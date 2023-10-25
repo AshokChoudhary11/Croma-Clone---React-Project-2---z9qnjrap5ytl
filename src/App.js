@@ -19,6 +19,7 @@ import FeatureUpdateSoon from "./components/FeatureUpdateSoon/FeatureUpdateSoon"
 import MyOrder from "./components/Pages/MyOrder";
 import { createContext, useState } from "react";
 import BrandCategory from "./components/Pages/BrandCategory";
+import MyProfile from "./components/Pages/MyProfile";
 
 export const CartValue = createContext();
 
@@ -44,6 +45,7 @@ function App() {
           <Route path="/UpdateSoon" element={<FeatureUpdateSoon />} />
           <Route path="/MyOrder" element={<MyOrder />} />
           <Route path="/brandPage/:brand" element={<BrandCategory />} />
+          <Route path="/Profile/edit-Profile" element={<MyProfile />} />
         </Routes>
       </AuthProvider>
     </CartValue.Provider>

@@ -69,58 +69,58 @@ const CartProductCard = ({ product, SetCartList }) => {
       console.log(err);
     }
   };
-  const AddWishList = async (e) => {
-    e.stopPropagation();
-    try {
-      const responce = await fetch(
-        "https://academics.newtonschool.co/api/v1/ecommerce/wishlist/",
-        {
-          method: "PATCH",
-          headers: {
-            Authorization: `Bearer ${parseUserDetails.token}`,
-            projectId: "z9qnjrap5ytl",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            productId: `${product._id}`,
-          }),
-        }
-      );
-      const data = await responce.json();
-      console.log(data);
-      if (responce.status >= 400) {
-        toast.error(`${data.message}`, {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-        return;
-      } else {
-        SetCartList((list) =>
-          list.filter((item) => item.product._id !== product.product._id)
-        );
-        setCartNum((prev) => prev - 1);
-        toast.success("item added to wishList successfully!", {
-          position: "top-center",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-        // setWishList(data);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const AddWishList = async (e) => {
+  //   e.stopPropagation();
+  //   try {
+  //     const responce = await fetch(
+  //       "https://academics.newtonschool.co/api/v1/ecommerce/wishlist/",
+  //       {
+  //         method: "PATCH",
+  //         headers: {
+  //           Authorization: `Bearer ${parseUserDetails.token}`,
+  //           projectId: "z9qnjrap5ytl",
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           productId: `${product._id}`,
+  //         }),
+  //       }
+  //     );
+  //     const data = await responce.json();
+  //     console.log(data);
+  //     if (responce.status >= 400) {
+  //       toast.error(`${data.message}`, {
+  //         position: "top-center",
+  //         autoClose: 5000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "dark",
+  //       });
+  //       return;
+  //     } else {
+  //       SetCartList((list) =>
+  //         list.filter((item) => item.product._id !== product.product._id)
+  //       );
+  //       setCartNum((prev) => prev - 1);
+  //       toast.success("item added to wishList successfully!", {
+  //         position: "top-center",
+  //         autoClose: 5000,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //         theme: "dark",
+  //       });
+  //       // setWishList(data);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   console.log(product);
   return (
     <>
@@ -132,7 +132,7 @@ const CartProductCard = ({ product, SetCartList }) => {
           <div className={Style.ProductDetails}>
             <p className={Style.ProductName}>{product.product.name}</p>
             <div className={Style.ProductRating}>
-              <div>{product.product.ratings}</div>
+              <div>{rating}</div>
               <StarIcon style={{ fontSize: "16px" }} />
             </div>
 
@@ -141,9 +141,9 @@ const CartProductCard = ({ product, SetCartList }) => {
               <div>{currentDate}</div>
             </div>
             <div className={Style.buttons}>
-              <button className={Style.MovetoWishList} onClick={AddWishList}>
+              {/* <button className={Style.MovetoWishList} onClick={AddWishList}>
                 Move to WishList
-              </button>
+              </button> */}
               <button className={Style.RemoveButton} onClick={RemoveOne}>
                 Remove
               </button>

@@ -53,6 +53,10 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
+}
+.creditOptions:hover {
+  background-color: gray;
 }
 .creditOptions span {
   font-weight: 600;
@@ -85,6 +89,7 @@
 }
 .CardNumber {
   width: 100%;
+  color: white;
   margin: 0px 0px 10px 0px;
   border: none;
   padding: 12px 0px;
@@ -100,6 +105,7 @@
 .detailInput {
   width: 100%;
   border: none;
+  color: white;
   border-bottom: 1px solid darkgray;
   background-color: inherit;
 }

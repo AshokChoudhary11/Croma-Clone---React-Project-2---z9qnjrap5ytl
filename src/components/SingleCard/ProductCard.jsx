@@ -90,9 +90,17 @@ const ProductCard = ({ product }) => {
         </div>
         <div className={Style.ProductDetails}>
           <p className={Style.ProductName}>{product.name}</p>
+          <div className={Style.btnSect}>
+            <button>
+              {Math.floor(Math.random() * (6000 - 2000 + 1) + 2000)}
+              &nbsp;off on payment OTP page
+            </button>
+            <button>6 Months No CostEMI</button>
+          </div>
           <div className={Style.ProductRating}>
-            <div>{rating}</div>
+            <div>{rating}&nbsp; </div>
             <StarIcon style={{ fontSize: "16px" }} />
+            &nbsp;rating
           </div>
           <div className={Style.ProductPrice}>
             <CurrencyRupeeIcon style={{ fontSize: "20px" }} />
