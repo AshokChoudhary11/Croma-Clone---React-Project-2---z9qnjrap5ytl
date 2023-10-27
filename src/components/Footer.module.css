@@ -14,7 +14,7 @@
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
 }
 .sect1 p:first-child {
   font-weight: bold;
