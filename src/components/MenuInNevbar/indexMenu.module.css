@@ -8,9 +8,13 @@
 }
 .menuIcon {
   font-size: 30px;
+  cursor: pointer;
 }
 .closeIcon {
   font-size: 30px;
+}
+.closeIcon:hover {
+  cursor: pointer;
 }
 .menuContainer {
   z-index: 1;
@@ -36,6 +40,7 @@
   background-color: aqua;
   color: black;
   font-weight: 500;
+  cursor: pointer;
 }
 .Category {
   padding: 15px 0px 15px 30px;
@@ -47,6 +52,7 @@
   padding: 10px 15px;
   font-size: 16px;
   font-weight: 400;
+  cursor: pointer;
 }
 .Category div:hover {
   background-color: aqua;

@@ -37,10 +37,11 @@ const Login = () => {
             "Content-Type": "application/json",
             projectId: "duzgori635w9",
           },
+
           body: JSON.stringify({
             email: userName,
             password: password,
-            appType: "facebook",
+            appType: "ecommerce",
           }),
         }
       );

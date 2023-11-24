@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Style from "./Profile.module.css";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
@@ -14,6 +14,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    !!localStorage.getItem("userDetails")
+  );
   const userDetails = localStorage.getItem("userDetails");
   const parseUserDetails = JSON.parse(userDetails);
 
@@ -43,27 +46,28 @@ const Profile = () => {
   };
   const handleLogOut = () => {
     localStorage.removeItem("userDetails");
-    if (localStorage.getItem("userDetails")) {
-      alert("Logout Successfully");
-    } else {
-      toast.success("Logout Successfully!", {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-    }
+    setIsLoggedIn(false);
+    toast.success("Logout Successfully!", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+  const handleLogin = () => {
+    navigate("/login");
   };
 
   return (
     <div className={Style.ProfileSection}>
       <div className={Style.header}>
         <div>My Account</div>
-        <button onClick={handleLogOut}>Logout</button>
+        {isLoggedIn && <button onClick={handleLogOut}>Logout</button>}
+        {!isLoggedIn && <button onClick={handleLogin}>Login</button>}
       </div>
       <div className={Style.detailSection}>
         <div className={Style.Container} onClick={gotomyProfile}>

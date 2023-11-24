@@ -10,3 +10,9 @@
   width: 600px;
   max-width: 100%;
 }
+.shorbutton {
+  color: black;
+  border-radius: 5px;
+  background-color: aqua;
+  padding: 5px 10px;
+}

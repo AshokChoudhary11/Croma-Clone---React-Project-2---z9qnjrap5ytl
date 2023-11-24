@@ -17,6 +17,7 @@
 .Heading {
   display: flex;
   justify-content: center;
+  margin-top: 14px;
 }
 .Form {
   display: flex;

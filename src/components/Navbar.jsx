@@ -18,8 +18,8 @@ function Navbar() {
   const parseUserLocation = JSON.parse(UserLocation);
   const userDetails = localStorage.getItem("userDetails");
   const parseUserDetails = JSON.parse(userDetails);
-  console.log(parseUserLocation);
-  console.log("userdata", parseUserDetails);
+  // console.log(parseUserLocation);
+  // console.log("userdata", parseUserDetails);
 
   const toHome = () => {
     navigate("/");

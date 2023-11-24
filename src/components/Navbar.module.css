@@ -27,6 +27,7 @@
 .left_part img {
   /* height: 30px; */
   width: 145px;
+  cursor: pointer;
 }
 .menu {
   display: flex;
@@ -49,13 +50,18 @@
 }
 .searchIcon {
   color: black;
+  cursor: pointer;
 }
 
 .location {
   font-size: 12px;
   display: flex;
   align-items: center;
+  cursor: pointer;
   gap: 3px;
+}
+.UserIcon:hover {
+  cursor: pointer;
 }
 
 .right_part {
@@ -66,6 +72,7 @@
 }
 .cart {
   position: relative;
+  cursor: pointer;
   display: flex;
 }
 .cartnumber {
