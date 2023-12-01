@@ -19,8 +19,8 @@ const ViewProduct = () => {
   const [Product, setProduct] = useState();
   const [wishList, setWishList] = useState(false);
   const [showMore, setShowMore] = useState(false);
-  // const [rating, setRating] = useState(3.5); // Initial rating value
-  const [Review, setReview] = useState([]);
+  const [ratting, setRatting] = useState(1); // Initial rating value
+  const [Review, setReview] = useState("");
   const userDetails = localStorage.getItem("userDetails");
   const parseUserDetails = JSON.parse(userDetails);
   const UserLocation = localStorage.getItem("locationDetails");
@@ -73,7 +73,7 @@ const ViewProduct = () => {
       console.log(data);
       if (responce.status >= 400) {
         toast.error(`${data.message}`, {
-          position: "top-center",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -86,7 +86,7 @@ const ViewProduct = () => {
       } else {
         setWishList(true);
         toast.success("item added to wishList successfully!", {
-          position: "top-center",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -122,7 +122,7 @@ const ViewProduct = () => {
         console.log(data);
         if (responce.status >= 400) {
           toast.error(`item already in cart`, {
-            position: "top-center",
+            position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -135,7 +135,7 @@ const ViewProduct = () => {
         } else {
           setCartNum((prev) => prev + 1);
           toast.success("item added to cart successfully!", {
-            position: "top-center",
+            position: "bottom-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
@@ -181,6 +181,33 @@ const ViewProduct = () => {
       }
     } catch (err) {
       console.log(err);
+    }
+  };
+  const handleSubmitReview = () => {
+    if (Review.length > 0) {
+      setRatting(1);
+      setReview("");
+      toast.success("Review added Successfully!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } else {
+      toast.error("Please Write a review", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
   };
   const AddReview = async (e) => {
@@ -334,7 +361,8 @@ const ViewProduct = () => {
               <select
                 name="Rating"
                 id="rating"
-                // onChange={(e) => setRating(e.target.value)}
+                value={ratting}
+                onChange={(e) => setRatting(e.target.value)}
               >
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -345,13 +373,20 @@ const ViewProduct = () => {
             </div>
             <textarea
               placeholder="Write a Review"
-              // onChange={(e) => setReview(e.target.value)}
+              value={Review}
+              onChange={(e) => setReview(e.target.value)}
             />
-            <button className={Style.SubmitReview}>Submit</button>
+            <button
+              className={Style.SubmitReview}
+              onClick={handleSubmitReview}
+              // disabled={Review.length <= 0}
+            >
+              Submit
+            </button>
           </div>
           <div className={Style.ConstomersReview}>
             <h3>Customer Reviews:</h3>
-            {Review &&
+            {/* {Review &&
               Review.map((constomer, index) => (
                 <div key={index}>
                   <div>constomer Name</div>
@@ -359,11 +394,10 @@ const ViewProduct = () => {
                   <span>review Date</span>
                   <div>Review content</div>
                 </div>
-              ))}
+              ))} */}
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

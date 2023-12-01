@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Style from "./CheckOut.module.css";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import CheckOutProductCard from "../Cards/CheckOutProductCard";
@@ -8,11 +8,16 @@ import AccountBalanceTwoToneIcon from "@mui/icons-material/AccountBalanceTwoTone
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { CartValue } from "../../App";
 
 const CheckOut = () => {
   const [cartList, SetCartList] = useState("");
   const [allData, setAllData] = useState({});
   const [cardNumber, setCardNumber] = useState("");
+  const [cardExpiry, setCardExpiry] = useState("");
+  const [cvv, setCvv] = useState("");
+  const { setCartNum } = useContext(CartValue);
+
   const userDetails = localStorage.getItem("userDetails");
   const parseUserDetails = JSON.parse(userDetails);
   const UserLocation = localStorage.getItem("locationDetails");
@@ -77,7 +82,7 @@ const CheckOut = () => {
       console.log(data);
       if (responce.status >= 400) {
         toast.error(`${data.message}`, {
-          position: "top-center",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -88,9 +93,8 @@ const CheckOut = () => {
         });
         return;
       } else {
-        SetCartList("");
         toast.success("Order Place Successfully!", {
-          position: "top-center",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -99,6 +103,14 @@ const CheckOut = () => {
           progress: undefined,
           theme: "dark",
         });
+        setCartNum(0);
+        SetCartList("");
+        setCardNumber("");
+        setCardExpiry("");
+        setCvv("");
+        setTimeout(() => {
+          navigate("/MyOrder");
+        }, 2000);
       }
     } catch (err) {
       console.log(err);
@@ -157,6 +169,7 @@ const CheckOut = () => {
                       placeholder="MM/YY"
                       pattern="\d{2}\/\d{4}"
                       required
+                      onChange={setCardExpiry}
                     />
                   </div>
                   <div>
@@ -166,6 +179,7 @@ const CheckOut = () => {
                       placeholder="CVV"
                       pattern="[0-9]{3}"
                       required
+                      onChange={setCvv}
                     />
                   </div>
                 </div>
@@ -233,7 +247,6 @@ const CheckOut = () => {
           <a href="#">Terms and Conditions</a>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

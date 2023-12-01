@@ -126,10 +126,11 @@ textarea {
   width: 50%;
   border: 1px solid gray;
   border-radius: 5px;
-  padding: 5px;
+  padding: 4px 26px;
   margin: 10px 0px;
   color: white;
   background-color: black;
+  line-height: 3;
 }
 .SubmitReview {
   width: 200px;

@@ -60,7 +60,7 @@ const Login = () => {
       const userDetails = localStorage.getItem("userDetails");
       const parseUserDetails = JSON.parse(userDetails);
       toast.success(`{parseUserDetails.user.name}`, {
-        position: "top-center",
+        position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -136,7 +136,6 @@ const Login = () => {
         </div>
       </div>
       <div className={Style.crossButton}>X</div>
-      <ToastContainer />
     </div>
   );
 };

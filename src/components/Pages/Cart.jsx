@@ -33,7 +33,7 @@ const Cart = () => {
       // console.log(parseData.data);
       if (responce.status >= 400) {
         toast.error(`{data.message}`, {
-          position: "top-center",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -72,7 +72,7 @@ const Cart = () => {
   //       return;
   //     }
   //     toast.success("Remove all product from cart Successfully!", {
-  //       position: "top-center",
+  //        position: "bottom-right",
   //       autoClose: 5000,
   //       hideProgressBar: false,
   //       closeOnClick: true,
@@ -171,7 +171,6 @@ const Cart = () => {
           </div>
         </>
       )}
-      <ToastContainer />
     </div>
   );
 };

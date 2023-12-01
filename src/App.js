@@ -20,6 +20,7 @@ import MyOrder from "./components/Pages/MyOrder";
 import { createContext, useState } from "react";
 import BrandCategory from "./components/Pages/BrandCategory";
 import MyProfile from "./components/Pages/MyProfile";
+import { ToastContainer } from "react-toastify";
 
 export const CartValue = createContext();
 
@@ -47,6 +48,7 @@ function App() {
           <Route path="/brandPage/:brand" element={<BrandCategory />} />
           <Route path="/Profile/edit-Profile" element={<MyProfile />} />
         </Routes>
+        <ToastContainer />
       </AuthProvider>
     </CartValue.Provider>
   );

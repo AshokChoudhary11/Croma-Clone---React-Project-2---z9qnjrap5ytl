@@ -48,7 +48,7 @@ const Profile = () => {
     localStorage.removeItem("userDetails");
     setIsLoggedIn(false);
     toast.success("Logout Successfully!", {
-      position: "top-center",
+      position: "bottom-right",
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,
@@ -142,7 +142,6 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

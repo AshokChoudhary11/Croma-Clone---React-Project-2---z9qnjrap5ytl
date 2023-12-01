@@ -26,7 +26,7 @@ const WishList = ({ product }) => {
       console.log(data);
       if (responce.status >= 400) {
         toast.error(`{data.message}`, {
-          position: "top-center",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -39,7 +39,7 @@ const WishList = ({ product }) => {
       } else {
         setList("");
         toast.success("Remove all product from WishList Successfully!", {
-          position: "top-center",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -97,7 +97,6 @@ const WishList = ({ product }) => {
             key={index}
           />
         ))}
-      <ToastContainer />
     </div>
   );
 };

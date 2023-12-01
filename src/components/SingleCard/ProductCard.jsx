@@ -51,7 +51,7 @@ const ProductCard = ({ product }) => {
       console.log(data);
       if (responce.status >= 400) {
         toast.error(` ${data.message}`, {
-          position: "top-center",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -64,7 +64,7 @@ const ProductCard = ({ product }) => {
       } else {
         setWishList(true);
         toast.success("item added to wishList Successfully!", {
-          position: "top-center",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -122,7 +122,6 @@ const ProductCard = ({ product }) => {
           <ShareIcon style={{ cursor: "not-allowed" }} />
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

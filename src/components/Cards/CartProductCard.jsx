@@ -38,7 +38,7 @@ const CartProductCard = ({ product, SetCartList }) => {
       console.log(data);
       if (responce.status >= 400) {
         toast.error(`{data.message}`, {
-          position: "top-center",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -54,7 +54,7 @@ const CartProductCard = ({ product, SetCartList }) => {
         );
         setCartNum((prev) => prev - 1);
         toast.success("Remove Successfully!", {
-          position: "top-center",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -90,7 +90,7 @@ const CartProductCard = ({ product, SetCartList }) => {
   //     console.log(data);
   //     if (responce.status >= 400) {
   //       toast.error(`${data.message}`, {
-  //         position: "top-center",
+  //          position: "bottom-right",
   //         autoClose: 5000,
   //         hideProgressBar: false,
   //         closeOnClick: true,
@@ -106,7 +106,7 @@ const CartProductCard = ({ product, SetCartList }) => {
   //       );
   //       setCartNum((prev) => prev - 1);
   //       toast.success("item added to wishList successfully!", {
-  //         position: "top-center",
+  //          position: "bottom-right",
   //         autoClose: 5000,
   //         hideProgressBar: false,
   //         closeOnClick: true,
@@ -159,7 +159,6 @@ const CartProductCard = ({ product, SetCartList }) => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

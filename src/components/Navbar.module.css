@@ -35,9 +35,14 @@
   align-items: center;
   gap: 5px;
 }
-.inputfield input {
+.inputfield form {
+  width: 100%;
+}
+form input {
   border: none;
   color: none;
+  width: 100%;
+  font-size: 14px;
 }
 .inputfield {
   display: flex;

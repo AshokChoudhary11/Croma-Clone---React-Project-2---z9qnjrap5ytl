@@ -19,7 +19,8 @@ const SingleProductCard = ({ product }) => {
   const viewProduct = () => {
     navigate(`/Product/${product._id}`);
   };
-  const AddWishList = async () => {
+  const AddWishList = async (e) => {
+    e.stopPropagation();
     try {
       if (!parseUserDetails || !parseUserDetails.token) {
         navigate("/login");
@@ -45,7 +46,7 @@ const SingleProductCard = ({ product }) => {
       console.log(data);
       if (responce.status >= 400) {
         toast.error(`${data.message}`, {
-          position: "top-center",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -58,7 +59,7 @@ const SingleProductCard = ({ product }) => {
       } else {
         setWishList(true);
         toast.success("item added to wishList successfully!", {
-          position: "top-center",
+          position: "bottom-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -101,7 +102,6 @@ const SingleProductCard = ({ product }) => {
           {/* <div className={Style.ratting}>{product.rating}</div> */}
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 };

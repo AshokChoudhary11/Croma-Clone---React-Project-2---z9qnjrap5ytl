@@ -68,7 +68,7 @@ const SignUp = () => {
       localStorage.setItem("userDetails", JSON.stringify(data));
       setUser(data);
       toast.success("SignUp successfully!", {
-        position: "top-center",
+        position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -132,7 +132,6 @@ const SignUp = () => {
         </div>
       </div>
       {/* <div className={Style.crossButton}>X</div> */}
-      <ToastContainer />
     </div>
   );
 };

@@ -21,7 +21,7 @@ const UpdateAddress = () => {
     localStorage.setItem("locationDetails", JSON.stringify(LocationDetails));
     navigate(-1);
     toast.success("Address Update Successfully!", {
-      position: "top-center",
+      position: "bottom-right",
       autoClose: 5000,
       hideProgressBar: false,
       closeOnClick: true,

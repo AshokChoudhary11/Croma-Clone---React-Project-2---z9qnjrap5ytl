@@ -12,6 +12,7 @@ import { CartValue } from "../App";
 
 function Navbar() {
   const { cartnum, setCartNum } = useContext(CartValue);
+  const [searchValue, setSearchValue] = useState("");
 
   const navigate = useNavigate();
   const UserLocation = localStorage.getItem("locationDetails");
@@ -67,7 +68,6 @@ function Navbar() {
   useEffect(() => {
     getCartItemNumber();
   }, [cartnum]);
-  const [searchValue, setSearchValue] = useState("");
 
   return (
     <header className={style.navbar_container}>

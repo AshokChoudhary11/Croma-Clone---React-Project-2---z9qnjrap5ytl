@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import Style from "./AllProduct.module.css";
 import ProductCard from "../SingleCard/ProductCard";
 import { useSearchParams } from "react-router-dom";
+import { TailSpin } from "react-loader-spinner";
 
 const AllProduct = () => {
   const [ProductList, SetProductList] = useState([]);
+  const [loading, setLoading] = useState(false);
   // const [updatedlist, setupdatedlist] = useState([]);
   const [searchParams] = useSearchParams();
   const searchProductName = searchParams.get("product_name");
@@ -12,30 +14,39 @@ const AllProduct = () => {
   // const [sortOrder, setSortOrder] = useState("ascending");
 
   const handleProductList = async (searchName) => {
-    const responce = await fetch(
-      `https://academics.newtonschool.co/api/v1/ecommerce/electronics/products?limit=1000${
-        searchName && `&search={"name":"${searchName}"}`
-      }`,
-      {
-        method: "GET",
-        headers: {
-          projectId: "ecbv068658kc",
-        },
+    setLoading(true);
+    try {
+      const responce = await fetch(
+        `https://academics.newtonschool.co/api/v1/ecommerce/electronics/products?limit=1000${
+          searchName && `&search={"name":"${searchName}"}`
+        }`,
+        {
+          method: "GET",
+          headers: {
+            projectId: "ecbv068658kc",
+          },
+        }
+      );
+      const parseData = await responce.json();
+      console.log(parseData.data);
+      if (responce.status >= 400) {
+        console.log(parseData.message || "Product not Found");
+        SetProductList([]);
+        return;
       }
-    );
-    const parseData = await responce.json();
-    console.log(parseData.data);
-    if (responce.status >= 400) {
-      console.log(parseData.message || "Product not Found");
-      return;
+      SetProductList(parseData.data);
+      console.log(ProductList);
+      // setLoading(false);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
     }
-    SetProductList(parseData.data);
-    console.log(ProductList);
   };
 
   useEffect(() => {
     handleProductList(searchProductName);
-  }, [searchProductName]);
+  }, [searchParams]);
   // const sortProducts = () => {
   // Create a copy of the original productList to avoid mutating state directly
   // const sortedList = [...ProductList];
@@ -54,8 +65,26 @@ const AllProduct = () => {
 
   return (
     <div>
-      {ProductList &&
-        ProductList.map((product) => <ProductCard product={product} />)}
+      {loading && (
+        <div className={Style.loading}>
+          <TailSpin
+            height="60"
+            width="60"
+            color="#4fa94d"
+            ariaLabel="tail-spin-loading"
+            radius="1"
+            wrapperStyle={{}}
+            wrapperClass=""
+            visible={true}
+          />
+        </div>
+      )}
+      {ProductList && ProductList.length > 0 ? (
+        ProductList.map((product) => <ProductCard product={product} />)
+      ) : (
+        <p className={Style.productNotFount}>Products not found!</p>
+      )}
+
       {/* <button className={Style.shorbutton} onClick={sortProducts}>
         {sortOrder === "ascending" ? "lowToHigh" : "highToLow"}
       </button>
