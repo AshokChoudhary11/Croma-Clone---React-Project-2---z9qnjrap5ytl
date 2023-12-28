@@ -65,6 +65,8 @@ const SignUp = () => {
         setError(data.message);
         return;
       }
+      console.log("data", data);
+
       localStorage.setItem("userDetails", JSON.stringify(data));
       setUser(data);
       toast.success("SignUp successfully!", {

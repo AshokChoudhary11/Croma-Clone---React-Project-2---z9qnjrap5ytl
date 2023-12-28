@@ -7,11 +7,11 @@ import { TailSpin } from "react-loader-spinner";
 const AllProduct = () => {
   const [ProductList, SetProductList] = useState([]);
   const [loading, setLoading] = useState(false);
-  // const [updatedlist, setupdatedlist] = useState([]);
+  const [updatedlist, setupdatedlist] = useState([]);
   const [searchParams] = useSearchParams();
   const searchProductName = searchParams.get("product_name");
-  // const [sortedProductList, setSortedProductList] = useState([]);
-  // const [sortOrder, setSortOrder] = useState("ascending");
+  const [sortedProductList, setSortedProductList] = useState([]);
+  const [sortOrder, setSortOrder] = useState("ascending");
 
   const handleProductList = async (searchName) => {
     setLoading(true);
@@ -47,21 +47,22 @@ const AllProduct = () => {
   useEffect(() => {
     handleProductList(searchProductName);
   }, [searchParams]);
-  // const sortProducts = () => {
-  // Create a copy of the original productList to avoid mutating state directly
-  // const sortedList = [...ProductList];
-  // sortedList.sort((a, b) => {
-  // if (sortOrder === "ascending") {
-  // return a.price - b.price;
-  // } else {
-  // return b.price - a.price;
-  // }
-  // });
-  // @ts-ignore
-  // setSortedProductList(sortedList);
-  // Toggle the sort order for the next click
-  // setSortOrder(sortOrder === "ascending" ? "descending" : "ascending");
-  // };
+  const sortProducts = () => {
+    // Create a copy of the original productList to avoid mutating state directly
+    const sortedList = [...ProductList];
+    sortedList.sort((a, b) => {
+      if (sortOrder === "ascending") {
+        return a.price - b.price;
+      } else {
+        return b.price - a.price;
+      }
+    });
+    console.log(sortedList, "sortedList");
+    // @ts-ignore
+    setSortedProductList([...sortedList]);
+    // Toggle the sort order for the next click
+    setSortOrder(sortOrder === "ascending" ? "descending" : "ascending");
+  };
 
   return (
     <div>
@@ -79,18 +80,15 @@ const AllProduct = () => {
           />
         </div>
       )}
-      {ProductList && ProductList.length > 0 ? (
-        ProductList.map((product) => <ProductCard product={product} />)
-      ) : (
-        <p className={Style.productNotFount}>Products not found!</p>
-      )}
-
       {/* <button className={Style.shorbutton} onClick={sortProducts}>
         {sortOrder === "ascending" ? "lowToHigh" : "highToLow"}
-      </button>
+      </button> */}
+      {ProductList && ProductList.length === 0 && (
+        <p className={Style.productNotFount}>Products not found!</p>
+      )}
       {sortedProductList.length > 0
         ? sortedProductList.map((product) => <ProductCard product={product} />)
-        : ProductList.map((product) => <ProductCard product={product} />)} */}
+        : ProductList.map((product) => <ProductCard product={product} />)}
     </div>
   );
 };

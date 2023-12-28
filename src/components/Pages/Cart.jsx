@@ -52,39 +52,41 @@ const Cart = () => {
       console.log(err);
     }
   };
-  // const handleclearall = async () => {
-  //   try {
-  //     const responce = await fetch(
-  //       "https://academics.newtonschool.co/api/v1/ecommerce/cart/",
-  //       {
-  //         method: "DELETE",
-  //         headers: {
-  //           Authorization: `Bearer ${parseUserDetails.token}`,
-  //           projectId: "z9qnjrap5ytl",
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     const parseData = await responce.json();
-  //     console.log("parseData", parseData);
-  //     if (responce.status >= 400) {
-  //       console.log(parseData.message || "Product not Found");
-  //       return;
-  //     }
-  //     toast.success("Remove all product from cart Successfully!", {
-  //        position: "bottom-right",
-  //       autoClose: 5000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "dark",
-  //     });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const handleclearall = async () => {
+    try {
+      const responce = await fetch(
+        "https://academics.newtonschool.co/api/v1/ecommerce/cart/",
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${parseUserDetails.token}`,
+            projectId: "z9qnjrap5ytl",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const parseData = await responce.json();
+      // console.log("parseData", parseData);
+      if (responce.status >= 400) {
+        console.log(parseData.message || "Product not Found");
+        return;
+      }
+      SetCartList(parseData.data.item);
+
+      toast.success("Remove all product from cart Successfully!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
     getAllProduct();
   }, []);
@@ -97,7 +99,7 @@ const Cart = () => {
 
   return (
     <div className={Style.CartContainer}>
-      {cartList.length > 0 ? (
+      {cartList?.length > 0 ? (
         <>
           <h2>Your Cart</h2>
           <div className={Style.allSection}>
@@ -149,7 +151,7 @@ const Cart = () => {
                 </div>
               </div>
               <button onClick={toCheckOut}>Check Out</button>
-              {/* <button onClick={handleclearall}>clear all</button> */}
+              <button onClick={handleclearall}>clear all</button>
             </div>
           </div>
         </>
