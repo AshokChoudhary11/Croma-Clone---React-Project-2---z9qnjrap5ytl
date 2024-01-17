@@ -12,6 +12,8 @@ import { CartValue } from "../../App";
 import { getRandomDecimal } from "../../utils/data";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image404 from "../../assets/2e60079f1e36b5c7681f0996a79e8af4.jpg";
+import Login from "../LogIn/Login";
 
 const ViewProduct = () => {
   const rating = getRandomDecimal();
@@ -19,6 +21,7 @@ const ViewProduct = () => {
   const [Product, setProduct] = useState();
   const [wishList, setWishList] = useState(false);
   const [showMore, setShowMore] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [ratting, setRatting] = useState(1); // Initial rating value
   const [Review, setReview] = useState("");
   const userDetails = localStorage.getItem("userDetails");
@@ -38,7 +41,9 @@ const ViewProduct = () => {
       return 5000;
     }
   };
-  
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
   // const discount = calculateDiscount(Product.price);
   // const mrp = Product.price + discount;
 
@@ -64,8 +69,9 @@ const ViewProduct = () => {
     e.stopPropagation();
     try {
       if (!parseUserDetails || !parseUserDetails.token) {
-        navigate("/login");
+        // navigate("/login");
         console.log("User details or token not found.");
+      setIsOpen(true);
         return;
       }
       const responce = await fetch(
@@ -116,8 +122,9 @@ const ViewProduct = () => {
   const AddtoCart = async () => {
     try {
       if (!parseUserDetails || !parseUserDetails.token) {
-        navigate("/login");
+        // navigate("/login");
         console.log("User details or token not found.");
+      setIsOpen(true);
         return;
       } else {
         const responce = await fetch(
@@ -166,8 +173,9 @@ const ViewProduct = () => {
   const BuyNow = async () => {
     try {
       if (!parseUserDetails || !parseUserDetails.token) {
-        navigate("/login");
+        // navigate("/login");
         console.log("User details or token not found.");
+      setIsOpen(true);
         return;
       } else {
         const responce = await fetch(
@@ -254,9 +262,11 @@ const ViewProduct = () => {
   //     console.log(err);
   //   }
   // };
+  const [showFallbackImage, setShowFallbackImage] = useState(false);
 
   useEffect(() => {
     if (productID) {
+      setShowFallbackImage(false);
       handleProduct();
     }
   }, [productID]);
@@ -290,7 +300,9 @@ const ViewProduct = () => {
                   <ShareOutlinedIcon style={{ cursor: "not-allowed" }} />
                 </div>
               </div>
-              <img src={Product.displayImage} alt="ProductImg" />
+              <img src={showFallbackImage ? Image404 : Product.displayImage} alt="ProductImg"  onError={() => {
+              setShowFallbackImage(true);
+            }}/>
               <div className={Style.CampareProduct}>
                 <div className={Style.disebleButton}>
                   <input type="checkbox" />
@@ -426,6 +438,8 @@ const ViewProduct = () => {
               ))} */}
           </div>
         </div>
+        <Login isOpen={isOpen} onClose={handleCloseModal} />
+
       </div>
     </>
   );

@@ -26,12 +26,11 @@
 }
 .ImageContainer {
   width: 100%;
-  padding: 10px;
-  position: relative;
-  min-height: 250px;
+  overflow: hidden;
 }
 .ImageContainer img {
   width: 100%;
+  height: 100%;
   
 }
 .cantent {

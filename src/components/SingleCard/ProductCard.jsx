@@ -12,10 +12,12 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { useNavigate } from "react-router-dom";
 import { getRandomDecimal } from "../../utils/data";
+import Login from "../LogIn/Login";
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product,setShowLoginPage }) => {
   const rating = getRandomDecimal();
   const [wishList, setWishList] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const UserLocation = localStorage.getItem("locationDetails");
   const parseUserLocation = JSON.parse(UserLocation);
   console.log("location", parseUserLocation);
@@ -29,8 +31,9 @@ const ProductCard = ({ product }) => {
     e.stopPropagation();
     try {
       if (!parseUserDetails || !parseUserDetails.token) {
-        navigate("/login");
+        // navigate("/login");
         console.log("User details or token not found.");
+        setShowLoginPage(true);
         return;
       }
       const responce = await fetch(
@@ -122,6 +125,13 @@ const ProductCard = ({ product }) => {
           <ShareIcon style={{ cursor: "not-allowed" }} />
         </div>
       </div>
+      <Login
+        isModal
+        onClose={() => {
+          setShowLoginModal(false);
+        }}
+        isOpen={showLoginModal}
+      />
     </>
   );
 };

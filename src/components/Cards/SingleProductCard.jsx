@@ -8,7 +8,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
-import Image404 from "../../error_404.jpeg";
+import Image404 from "../../assets/2e60079f1e36b5c7681f0996a79e8af4.jpg";
 import { toast } from "react-toastify";
 import Login from "../LogIn/Login";
 
