@@ -9,6 +9,7 @@ import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import Image404 from "../../error_404.jpeg";
+import { toast } from "react-toastify";
 
 const SingleProductCard = ({ product }) => {
   const [wishList, setWishList] = useState(false);
@@ -23,8 +24,6 @@ const SingleProductCard = ({ product }) => {
     e.stopPropagation();
     try {
       if (!parseUserDetails || !parseUserDetails.token) {
-        navigate("/login");
-        console.log("User details or token not found.");
         return;
       }
 
