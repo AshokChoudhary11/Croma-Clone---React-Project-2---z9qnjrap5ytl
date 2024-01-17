@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Carousel from "./Carousel/Carousel";
 import { CAROUSEL_DATA } from "./Carousel/constants";
 import Brand from "./CategoryList/Brand";
@@ -10,7 +10,9 @@ import ProductBanner from "./ItemBanner/ProductBanner";
 import DealOnLeptop from "./DealsOnCroma/DealOnLeptop";
 import DealOnAc from "./DealsOnCroma/DealOnAc";
 import DealOnAudio from "./DealsOnCroma/DealOnAudio";
+import Login from "./LogIn/Login";
 const Home = () => {
+  const [showLoginPage, setShowLoginPage] = useState(false);
   return (
     <div>
       <Carousel data={CAROUSEL_DATA.slides} />
@@ -23,19 +25,19 @@ const Home = () => {
       </div>
       <div className="productSection">
         <h2>Top Tranding Deal</h2>
-        <TrandingProduct />
+        <TrandingProduct setShowLoginPage={setShowLoginPage}/>
       </div>
       <div className="productSection">
         <h2>Kitchen Appliances</h2>
-        <KitchenAppliances />
+        <KitchenAppliances setShowLoginPage={setShowLoginPage}/>
       </div>
       <div className="productSection">
         <h2>Apple at Croma</h2>
-        <ProductBanner />
+        <ProductBanner setShowLoginPage={setShowLoginPage}/>
       </div>
       <div className="productSection">
         <h2>Deal on Audio</h2>
-        <DealOnAudio />
+        <DealOnAudio setShowLoginPage={setShowLoginPage}/>
       </div>
       <div className="productSection">
         <h2>Brands</h2>
@@ -43,13 +45,13 @@ const Home = () => {
       </div>
       <div className="productSection">
         <h2>Deal on Leptop</h2>
-        <DealOnLeptop />
+        <DealOnLeptop setShowLoginPage={setShowLoginPage}/>
       </div>
       <div className="productSection">
         <h2>Deal on Ac</h2>
-        <DealOnAc />
+        <DealOnAc setShowLoginPage={setShowLoginPage} />
       </div>
-
+      <Login onClose={() => setShowLoginPage(false)} isOpen={showLoginPage} />
       <Footer />
     </div>
   );

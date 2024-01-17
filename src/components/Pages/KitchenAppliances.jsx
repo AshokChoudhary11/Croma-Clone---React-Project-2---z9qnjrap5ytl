@@ -5,7 +5,7 @@ import Style from "../CategoryList/index.module.css";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-const KitchenAppliances = () => {
+const KitchenAppliances = ({setShowLoginPage}) => {
   const [trandingProduct, setTrandingProduct] = useState([]);
   const userDetails = localStorage.getItem("userDetails");
   const parseUserDetails = JSON.parse(userDetails);
@@ -60,7 +60,7 @@ const KitchenAppliances = () => {
         <Carousel responsive={responsive}>
           {trandingProduct &&
             trandingProduct.map((product, index) => {
-              return <SingleProductCard product={product} key={index} />;
+              return <SingleProductCard product={product} key={index} setShowLoginPage={setShowLoginPage}/>;
             })}
         </Carousel>
       </div>

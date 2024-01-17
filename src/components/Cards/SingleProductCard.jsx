@@ -10,8 +10,9 @@ import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import Image404 from "../../error_404.jpeg";
 import { toast } from "react-toastify";
+import Login from "../LogIn/Login";
 
-const SingleProductCard = ({ product }) => {
+const SingleProductCard = ({ product, setShowLoginPage }) => {
   const [wishList, setWishList] = useState(false);
   const userDetails = localStorage.getItem("userDetails");
   const parseUserDetails = JSON.parse(userDetails);
@@ -24,6 +25,7 @@ const SingleProductCard = ({ product }) => {
     e.stopPropagation();
     try {
       if (!parseUserDetails || !parseUserDetails.token) {
+        setShowLoginPage(true);
         return;
       }
 
@@ -73,7 +75,7 @@ const SingleProductCard = ({ product }) => {
     }
   };
   const [showFallbackImage, setShowFallbackImage] = useState(false);
-
+  const [showLoginModal, setShowLoginModal] = useState(false);
   useEffect(() => {
     if (product) {
       setShowFallbackImage(false);
@@ -115,6 +117,13 @@ const SingleProductCard = ({ product }) => {
           {/* <div className={Style.ratting}>{product.rating}</div> */}
         </div>
       </div>
+      <Login
+        isModal
+        onClose={() => {
+          setShowLoginModal(false);
+        }}
+        isOpen={showLoginModal}
+      />
     </>
   );
 };

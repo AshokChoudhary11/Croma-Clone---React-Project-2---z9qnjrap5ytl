@@ -22,7 +22,7 @@ const Login = ({ isOpen = true, onClose }) => {
 
   const handleCloseModal = () => {
     setSignupOpen(false);
-    onClose()
+    onClose();
   };
   const handleLogIn = async () => {
     try {
@@ -80,7 +80,7 @@ const Login = ({ isOpen = true, onClose }) => {
     }
   };
   const toSignUp = () => {
-    setSignupOpen(true)
+    setSignupOpen(true);
     // navigate("/signup", { replace: true });
   };
   const handleEmailChange = (e) => {
@@ -108,17 +108,23 @@ const Login = ({ isOpen = true, onClose }) => {
     return navigate(-1);
   }
   if (signupOpen) {
-    return <SignUp signupOpen={signupOpen} onClose={() => {
-      setSignupOpen(false);
-      onClose()
-    }} />
+    return (
+      <SignUp
+        signupOpen={signupOpen}
+        onClose={() => {
+          setSignupOpen(false);
+          onClose();
+        }}
+      />
+    );
   }
 
   return (
-    <div
-      className={Style.modal}>
+    <div className={Style.modal}>
       <div className={Style.LogInContainer}>
-        <div className={Style.crossButton} onClick={onClose}>X</div>
+        <div className={Style.crossButton} onClick={onClose}>
+          X
+        </div>
 
         <div className={Style.Heading}>
           <h2>Log In</h2>
@@ -152,7 +158,6 @@ const Login = ({ isOpen = true, onClose }) => {
           <button onClick={handleLogIn}>Log in</button>
           <button onClick={toSignUp}>Create new Account</button>
         </div>
-
       </div>
     </div>
   );
