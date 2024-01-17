@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Style from "./Profile.module.css";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
@@ -11,19 +11,29 @@ import SmsFailedOutlinedIcon from "@mui/icons-material/SmsFailedOutlined";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Login from "../LogIn/Login";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(
     !!localStorage.getItem("userDetails")
   );
   const userDetails = localStorage.getItem("userDetails");
   const parseUserDetails = JSON.parse(userDetails);
+  const modalRef = useRef();
+
+
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
 
   const toWishList = () => {
     if (!parseUserDetails || !parseUserDetails.token) {
-      navigate("/login");
+      // navigate("/login");
       console.log("User details or token not found.");
+      setIsOpen(true);
       return;
     } else {
       navigate("/wishList");
@@ -31,7 +41,8 @@ const Profile = () => {
   };
   const toMyOrder = () => {
     if (!parseUserDetails || !parseUserDetails.token) {
-      navigate("/login");
+      // navigate("/login");
+      setIsOpen(true);
       console.log("User details or token not found.");
       return;
     } else {
@@ -59,8 +70,21 @@ const Profile = () => {
     });
   };
   const handleLogin = () => {
-    navigate("/login");
+    setIsOpen(true);
   };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        handleCloseModal();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [modalRef]);
 
   return (
     <div className={Style.ProfileSection}>
@@ -69,7 +93,7 @@ const Profile = () => {
         {isLoggedIn && <button onClick={handleLogOut}>Logout</button>}
         {!isLoggedIn && <button onClick={handleLogin}>Login</button>}
       </div>
-      <div className={Style.detailSection}>
+      <div className={Style.detailSection} ref={modalRef}>
         <div className={Style.Container} onClick={gotomyProfile}>
           <div className={Style.icon}>
             <AccountCircleOutlinedIcon />
@@ -93,7 +117,7 @@ const Profile = () => {
             <InventoryOutlinedIcon />
           </div>
           <div>
-            <div className={Style.heading}>My Orders</div>
+            <div className={Style.heading} >My Orders</div>
             <div className={Style.about}>
               View, track, cancle orders and buy again
             </div>
@@ -141,6 +165,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
+        <Login isOpen={isOpen} onClose={handleCloseModal} />
       </div>
     </div>
   );

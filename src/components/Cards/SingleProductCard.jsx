@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Style from "./SingleProductCard.module.css";
 import Rating from "@mui/material/Rating";
 import StarIcon from "@mui/icons-material/Star";
@@ -7,8 +7,8 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Image404 from "../../error_404.jpeg";
 
 const SingleProductCard = ({ product }) => {
   const [wishList, setWishList] = useState(false);
@@ -73,6 +73,14 @@ const SingleProductCard = ({ product }) => {
       console.log(err);
     }
   };
+  const [showFallbackImage, setShowFallbackImage] = useState(false);
+
+  useEffect(() => {
+    if (product) {
+      setShowFallbackImage(false);
+    }
+  }, [product]);
+
   return (
     <>
       <div className={Style.CardContainer} onClick={viewProduct}>
@@ -80,7 +88,13 @@ const SingleProductCard = ({ product }) => {
           {wishList ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         </div>
         <div className={Style.ImageContainer}>
-          <img src={product.displayImage} alt="Product Image" />
+          <img
+            src={showFallbackImage ? Image404 : product.displayImage}
+            alt="Product"
+            onError={() => {
+              setShowFallbackImage(true);
+            }}
+          />
         </div>
         <div className={Style.cantent}>
           <div className={Style.productName}>{product.name}</div>

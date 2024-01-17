@@ -28,9 +28,11 @@
   width: 100%;
   padding: 10px;
   position: relative;
+  min-height: 250px;
 }
 .ImageContainer img {
   width: 100%;
+  
 }
 .cantent {
   margin: 10px;
@@ -54,7 +56,7 @@
 
 @media (max-width: 768px) {
   .CardContainer {
-    width: 120px;
+    width: 114px;
     position: relative;
   }
   .wishLishIcon {
@@ -69,5 +71,9 @@
   .productPrice {
     font-size: 16px;
     font-weight: bold;
+  }
+  .ImageContainer{
+    min-height: 100px;
+
   }
 }

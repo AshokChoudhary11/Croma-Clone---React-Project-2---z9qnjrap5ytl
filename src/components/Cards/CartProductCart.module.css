@@ -32,7 +32,7 @@
 }
 .ProductRating {
   font-size: 16px;
-  color: aqua;
+  color: #12daa8;
   margin-bottom: 8px;
   display: flex;
   align-items: center;
@@ -81,12 +81,12 @@
 }
 .MovetoWishList:hover {
   cursor: pointer;
-  background-color: aqua;
+  background-color: #12daa8;
   color: black;
 }
 .RemoveButton:hover {
   cursor: pointer;
-  background-color: aqua;
+  background-color: #12daa8;
   color: black;
 }
 @media (max-width: 768px) {

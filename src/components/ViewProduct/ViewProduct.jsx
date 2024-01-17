@@ -7,7 +7,7 @@ import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import StoreIcon from "@mui/icons-material/Store";
 import StarIcon from "@mui/icons-material/Star";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { CartValue } from "../../App";
 import { getRandomDecimal } from "../../utils/data";
 import { ToastContainer, toast } from "react-toastify";
@@ -27,6 +27,21 @@ const ViewProduct = () => {
   const parseUserLocation = JSON.parse(UserLocation);
   const navigate = useNavigate();
 
+  const calculateDiscount = (price) => {
+    if (price < 1000) {
+      return 200;
+    } else if (price >= 1000 && price <= 5000) {
+      return 600;
+    } else if (price > 5000 && price <= 50000) {
+      return 2500;
+    } else {
+      return 5000;
+    }
+  };
+  
+  // const discount = calculateDiscount(Product.price);
+  // const mrp = Product.price + discount;
+
   const { productID } = useParams();
   const url = `https://academics.newtonschool.co/api/v1/ecommerce/product/${productID}`;
   const handleProduct = async () => {
@@ -43,9 +58,7 @@ const ViewProduct = () => {
       return;
     }
     setProduct(parseData.data);
-    // setRating(parseData.data.ratings); // Set the initial rating
     setReview(parseData.data.reviews);
-    // console.log(parseData.data);
   };
   const AddWishList = async (e) => {
     e.stopPropagation();
@@ -171,7 +184,6 @@ const ViewProduct = () => {
         const data = await responce.json();
         console.log(data);
         if (responce.status >= 400) {
-          // alert(data.message);
           navigate("/cart");
           return;
         } else {
@@ -210,38 +222,39 @@ const ViewProduct = () => {
       });
     }
   };
-  const AddReview = async (e) => {
-    // e.stopPropagation();
-    try {
-      if (!parseUserDetails || !parseUserDetails.token) {
-        navigate("/login");
-        console.log("User details or token not found.");
-        return;
-      } else {
-        const responce = await fetch(
-          `https://academics.newtonschool.co/api/v1/ecommerce/review/${Product._id} `,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${parseUserDetails.token}`,
-              projectId: "z9qnjrap5ytl",
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const data = await responce.json();
-        console.log(data);
-        if (responce.status >= 400) {
-          alert(data.message);
-          return;
-        } else {
-          alert("add Successfully!");
-        }
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const AddReview = async (e) => {
+  //   // e.stopPropagation();
+  //   try {
+  //     if (!parseUserDetails || !parseUserDetails.token) {
+  //       navigate("/login");
+  //       console.log("User details or token not found.");
+  //       return;
+  //     } else {
+  //       const responce = await fetch(
+  //         `https://academics.newtonschool.co/api/v1/ecommerce/review/${Product._id} `,
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             Authorization: `Bearer ${parseUserDetails.token}`,
+  //             projectId: "z9qnjrap5ytl",
+  //             "Content-Type": "application/json",
+  //           },
+  //         }
+  //       );
+  //       const data = await responce.json();
+  //       console.log(data);
+  //       if (responce.status >= 400) {
+  //         alert(data.message);
+  //         return;
+  //       } else {
+  //         alert("add Successfully!");
+  //       }
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   useEffect(() => {
     if (productID) {
       handleProduct();
@@ -300,6 +313,7 @@ const ViewProduct = () => {
               emptyIcon={<StarBorderIcon style={{ color: "white" }} />}
               icon={<StarIcon style={{ color: "yellow" }} />}
             /> */}
+            <div className={Style.ExtraDiscount}>Extra Rs {calculateDiscount(Product.price)} Discount</div>
             <div className={Style.ProductRating}>
               <div>{rating}</div>
               <StarIcon style={{ fontSize: "16px" }} />
@@ -310,14 +324,24 @@ const ViewProduct = () => {
               <div> {Product.price}.00</div>
             </div>
             <div className={Style.tex}>(Incl. all Texes)</div>
+            <div className={Style.hrline}></div>
+            <div className={Style.mrp}>
+              <div className={Style.total_price}>MRP: {calculateDiscount(Product.price) + Product.price}.00</div>
+              <div className={Style.saveDiscount}>(Save <CurrencyRupeeIcon style={{ fontSize: "14px" }} />{calculateDiscount(Product.price)})</div>
+            </div>
+            <div className={Style.hrline}></div>
+
             <div className={Style.deliveryAddress}>
               <div className={Style.DeliveryAddress}>
-                Delivery at: {parseUserLocation?.City},
-                {parseUserLocation?.Pincode}
+                Delivery at: 
+                {parseUserLocation?.Zipcode ? `${ parseUserLocation?.City}, ${parseUserLocation?.Zipcode}` : <Link to="/udateAddress" >Enter pincode</Link>}
               </div>
-              <div className={Style.StanderdDelivery}>
+              {parseUserLocation?.Pincode ? (<div className={Style.StanderdDelivery}>
                 Standard Delivery by Tomorrow
-              </div>
+              </div>):(<div className={Style.StanderdDelivery}>
+                Standard Delivery Will be Available
+              </div>)}
+              
             </div>
             <div className={Style.KeyFeatures}>
               <p>Key Features</p>
@@ -347,6 +371,11 @@ const ViewProduct = () => {
           {!showMore && (
             <button onClick={toggleShowMore} className={Style.ShowMoreButton}>
               Show More
+            </button>
+          )}
+          {showMore && (
+            <button onClick={toggleShowMore} className={Style.ShowMoreButton}>
+              Show Less
             </button>
           )}
         </div>
@@ -379,7 +408,7 @@ const ViewProduct = () => {
             <button
               className={Style.SubmitReview}
               onClick={handleSubmitReview}
-              // disabled={Review.length <= 0}
+            // disabled={Review.length <= 0}
             >
               Submit
             </button>

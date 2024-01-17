@@ -21,7 +21,7 @@
 }
 .header button:hover {
   cursor: pointer;
-  background-color: aqua;
+  background-color: #12daa8;
   color: black;
 }
 .detailSection {

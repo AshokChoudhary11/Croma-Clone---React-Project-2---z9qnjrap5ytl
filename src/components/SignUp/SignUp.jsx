@@ -5,7 +5,7 @@ import { useAuth } from "../Provider/AuthProvider";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const SignUp = () => {
+const SignUp = ({ signupOpen, onClose }) => {
   const [userName, setUserName] = useState("");
   const [user_email, setuser_email] = useState("");
   const [user_password, setuser_password] = useState("");
@@ -33,6 +33,9 @@ const SignUp = () => {
   const validatePassword = (password) => {
     return password.length >= 5;
   };
+  if (!signupOpen) {
+    return null;
+  }
   const submitForm = async () => {
     try {
       if (!validateEmail(user_email)) {
@@ -86,8 +89,10 @@ const SignUp = () => {
     }
   };
   return (
-    <div className={Style.main}>
+    <div className={Style.modal}>
       <div className={Style.LogInContainer}>
+        <div className={Style.crossButton} onClick={onClose}>X</div>
+
         <div className={Style.Heading}>
           <h2>Sign Up</h2>
         </div>
@@ -130,10 +135,9 @@ const SignUp = () => {
           {error && <div className={Style.error}>{error}</div>}
 
           <button onClick={submitForm}>Sign Up</button>
-          <a href="/login">Already have an account?</a>
+          <div onClick={() => onClose()} className={Style.alreadyAccount}>Already have an account?</div>
         </div>
       </div>
-      {/* <div className={Style.crossButton}>X</div> */}
     </div>
   );
 };

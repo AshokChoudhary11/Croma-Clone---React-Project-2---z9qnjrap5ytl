@@ -31,7 +31,7 @@
 }
 .ProductRating {
   font-size: 16px;
-  color: aqua;
+  color: #12daa8;
   margin-bottom: 8px;
 }
 .ProductPrice {
@@ -61,7 +61,7 @@
   padding: 10px;
   border: none;
   border-radius: 8px;
-  background-color: aqua;
+  background-color: #12daa8;
   font-size: 16px;
 }
 .button button:hover {
@@ -109,7 +109,7 @@
     padding: 5px 30px;
     border: none;
     border-radius: 5px;
-    background-color: aqua;
+    background-color: #12daa8;
     font-size: 13px;
   }
   .ProductId {

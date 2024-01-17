@@ -1,7 +1,7 @@
 .mainContainer {
   width: 400px;
   border: 1px solid gray;
-  display: flex;
+  /* display: flex; */
   border-radius: 8px;
   padding: 10px;
   color: white;
@@ -12,11 +12,21 @@
   align-items: center;
   gap: 15px;
   padding: 20px;
+  margin-top: -30px;
 }
 .details {
   font-size: 15px;
 }
-.contentSection input {
+.street{
+  width: 100%;
+}
+label{
+  font-weight: 800;
+}
+.street input{
+  margin-top: 10px;
+}
+input {
   padding: 15px;
   width: 100%;
   background-color: inherit;
@@ -27,7 +37,7 @@
 .contentSection button {
   padding: 15px;
   width: 100%;
-  background-color: aqua;
+  background-color: #12daa8;
   border: none;
   border-radius: 6px;
   font-size: 16px;
@@ -48,4 +58,20 @@
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
+}
+.crossButton{
+  margin: -5px 0px 0px 352px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  background-color: gray;
+}
+.crossButton:hover{
+  cursor: pointer;
+  background-color: rgb(191, 191, 191);
+  color: black;
+  transition: 0.5s;
 }

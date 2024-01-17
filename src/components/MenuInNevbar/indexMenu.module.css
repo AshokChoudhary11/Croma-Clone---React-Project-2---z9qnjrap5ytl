@@ -37,7 +37,7 @@
   padding-left: 30px;
 }
 .services div:hover {
-  background-color: aqua;
+  background-color: #12daa8;
   color: black;
   font-weight: 500;
   cursor: pointer;
@@ -55,7 +55,7 @@
   cursor: pointer;
 }
 .Category div:hover {
-  background-color: aqua;
+  background-color: #12daa8;
   color: black;
   font-weight: 500;
 }
@@ -78,7 +78,7 @@
     padding-left: 30px;
   }
   .services div:hover {
-    background-color: aqua;
+    background-color: #12daa8;
     color: black;
     font-weight: 500;
   }

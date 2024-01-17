@@ -87,6 +87,7 @@ const Cart = () => {
       console.log(err);
     }
   };
+
   useEffect(() => {
     getAllProduct();
   }, []);
@@ -104,21 +105,26 @@ const Cart = () => {
           <h2>Your Cart</h2>
           <div className={Style.allSection}>
             <div className={Style.leftSection}>
-              <div className={Style.AddressSection} onClick={toUpdateAddress}>
+              <div className={Style.AddressSection}
+              >
                 <div className={Style.ShippingAddressText}>
                   Shipping Address
                 </div>
-                <h3>Home</h3>
+                <div className={Style.home}>Home</div>
                 <div className={Style.Address}>
-                  {parseUserLocation?.Address}
-                  {parseUserLocation?.State}
-                  {parseUserLocation?.Pincode}
+                  {parseUserLocation?.Street}
                 </div>
+                <div className={Style.Address}>{parseUserLocation?.City},
+                  {parseUserLocation?.State}</div>
+                <div className={Style.Address}>{parseUserLocation?.Zipcode}</div>
+                <a href="" onClick={toUpdateAddress}>
+                  Edit Shipping Address
+                </a>
               </div>
-              <div className={Style.CoupenSection}>
+              {/* <div className={Style.CoupenSection}>
                 <PercentIcon className={Style.percentIcon} />
                 Apply Coupon
-              </div>
+              </div> */}
               <div className={Style.Product}>
                 {cartList &&
                   cartList?.map((product, index) => (
@@ -173,6 +179,7 @@ const Cart = () => {
           </div>
         </>
       )}
+
     </div>
   );
 };

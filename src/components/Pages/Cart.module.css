@@ -53,6 +53,15 @@
 .Address {
   font-size: 14px;
 }
+.home {
+  border: 1px solid gray;
+  border-radius: 6px;
+  width: fit-content;
+  padding: 1px 4px;
+  margin: 10px 0px;
+  color: gray;
+  font-size: 14px;
+}
 .OriginalPrice {
   display: flex;
   justify-content: space-between;
@@ -79,7 +88,7 @@
   justify-content: center;
   width: 100%;
   padding: 10px;
-  background-color: aqua;
+  background-color: #12daa8;
   border: none;
   border-radius: 8px;
   margin-top: 25px;
@@ -112,7 +121,7 @@
   color: gray;
 }
 .innerInfo a {
-  color: aqua;
+  color: #12daa8;
 }
 @media (max-width: 768px) {
   .CartContainer {

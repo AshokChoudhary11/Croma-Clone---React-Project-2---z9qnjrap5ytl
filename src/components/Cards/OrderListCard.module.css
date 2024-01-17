@@ -6,6 +6,7 @@
   border: 1px solid gray;
   border-radius: 8px;
   padding: 25px;
+  position: relative;
 }
 .ProductDetail {
   display: flex;
@@ -42,10 +43,11 @@
 }
 .ref {
   cursor: pointer;
-  color: aqua;
+  color: #12daa8;
   text-decoration: underline;
   justify-content: right;
 }
+
 @media (max-width: 768px) {
   .ProductContainer {
     width: 100%;

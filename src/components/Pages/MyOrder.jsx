@@ -2,11 +2,18 @@
 import React, { useEffect, useState } from "react";
 import Style from "./myOrder.module.css";
 import OrderListCard from "../Cards/OrderListCard";
+import Login from "../LogIn/Login";
 
 const MyOrder = () => {
   const [orderList, setOrderList] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
   const userDetails = localStorage.getItem("userDetails");
   const parseUserDetails = JSON.parse(userDetails);
+  const handleCloseModal = () => {
+    debugger;
+    setIsOpen(false);
+  };
+
   const GetorderList = async () => {
     try {
       const responce = await fetch(
@@ -32,15 +39,19 @@ const MyOrder = () => {
       console.log(error);
     }
   };
+
   useEffect(() => {
-    GetorderList();
+    if (userDetails)
+      GetorderList();
+    else setIsOpen(true);
   }, []);
 
   return (
     <div className={Style.mainContainer}>
+
       {orderList.length > 0 ? (
         <>
-          <h2 className={Style.heading}>My Orders</h2>
+          <h2 className={Style.heading}>Your Orders</h2>
           {orderList &&
             orderList.map((product, index) => (
               <OrderListCard product={product} key={index} />
@@ -48,11 +59,11 @@ const MyOrder = () => {
         </>
       ) : (
         <>
-          <h2>Your Cart</h2>
-          <div className={Style.mainContainer}>
+          <h2 className={Style.heading}>Your Orders</h2>
+          <div className={Style.Empty_List_mainContainer}>
             <img
-              src="https://media-ik.croma.com/prod/https://media.croma.com/image/upload/f_auto,q_auto,d_Croma%20Assets:No_image.png/Croma%20Assets/UI%20Assets/sshz69afrixwivcsgnpx.svg"
-              alt="Empty OrderList Image"
+              src='https://media.croma.com/image/upload/f_auto,q_auto,d_Croma%20Assets:No_image.png/Croma%20Assets/UI%20Assets/sshz69afrixwivcsgnpx.svg'
+              alt='Empty-OrderList-Image'
             />
             <div className={Style.info}>
               <div>No Order History Available</div>
@@ -63,6 +74,7 @@ const MyOrder = () => {
           </div>
         </>
       )}
+      <Login isOpen={isOpen} onClose={handleCloseModal} />
     </div>
   );
 };

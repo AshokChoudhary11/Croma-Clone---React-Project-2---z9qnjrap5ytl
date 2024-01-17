@@ -9,10 +9,14 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Menu from "./MenuInNevbar/Menu.jsx";
 import { useNavigate } from "react-router-dom";
 import { CartValue } from "../App";
+import Login from "./LogIn/Login.jsx";
+
 
 function Navbar() {
   const { cartnum, setCartNum } = useContext(CartValue);
   const [searchValue, setSearchValue] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
 
   const navigate = useNavigate();
   const UserLocation = localStorage.getItem("locationDetails");
@@ -30,11 +34,15 @@ function Navbar() {
   };
   const toCart = () => {
     if (!parseUserDetails || !parseUserDetails.token) {
-      navigate("/login");
+      // navigate("/login");
+      setIsOpen(true);
       console.log("User details or token not found.");
       return;
     }
     navigate("/cart");
+  };
+  const handleCloseModal = () => {
+    setIsOpen(false);
   };
   const toUpdate = () => {
     navigate("/udateAddress");
@@ -119,7 +127,7 @@ function Navbar() {
         <div className={style.right_part}>
           <div className={style.location} onClick={toUpdate}>
             <LocationOnIcon />
-            {parseUserLocation ? parseUserLocation.Pincode : "location"},
+            {parseUserLocation ? parseUserLocation.Zipcode : "location"},
             {parseUserLocation ? parseUserLocation.City : ""}
             <EditIcon className={style.editIcon} style={customIconStyle} />
           </div>
@@ -131,8 +139,12 @@ function Navbar() {
             <p className={style.cartnumber}>{cartnum}</p>
           </div>
         </div>
+
       </div>
+      <Login isOpen={isOpen} onClose={handleCloseModal} />
+      
     </header>
+    
   );
 }
 

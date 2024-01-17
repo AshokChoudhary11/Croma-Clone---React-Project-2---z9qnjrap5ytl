@@ -71,7 +71,8 @@ const MyProfile = () => {
             className={styles.emailInp1}
             type="number"
             name="email"
-            value={7568894311}
+            // value={7568894311}
+            placeholder="Enter your mobile number"
             readOnly
           />
           <br />

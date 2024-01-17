@@ -39,10 +39,11 @@
   width: 100%;
 }
 form input {
+  padding: 0;
   border: none;
-  color: none;
+  color: black;
   width: 100%;
-  font-size: 14px;
+  font-size: 18px;
 }
 .inputfield {
   display: flex;
@@ -144,4 +145,5 @@ form input {
     /* align-items: center; */
     /* text-align: center; */
   }
+  
 }

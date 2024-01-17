@@ -1,18 +1,25 @@
-.main {
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(49, 49, 49, 0.8);
   display: flex;
-  gap: 10px;
-  margin: 30px;
-  color: white;
   justify-content: center;
+  align-items: center;
+  z-index: 1;
 }
 .LogInContainer {
   display: flex;
   flex-direction: column;
   color: white;
-  width: 400px;
-  height: 400px;
+  width: 100%;
+  max-width: 400px;
   border: 1px solid gray;
   border-radius: 8px;
+  background-color: black;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 .Heading {
   display: flex;
@@ -27,16 +34,16 @@
 }
 .Form input {
   padding: 8px;
-  background-color: black;
   border: none;
+  background-color: black;
+  border-bottom: 1px solid gray;
   border-radius: 6px;
   margin-top: -5px;
   color: white;
 }
 .Form button {
   padding: 8px;
-  background-color: aqua;
-  border: none;
+  background-color: #12daa8;
   border-radius: 6px;
   font-size: 15px;
 }
@@ -47,10 +54,30 @@
   color: red;
 }
 .crossButton {
-  display: none;
+  margin: 5px 0px 0px 360px;
+  background-color: gray;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+}
+.alreadyAccount {
+  font-size: small;
+}
+.alreadyAccount:hover {
+  color: #12daa8;
+  text-decoration: underline;
 }
 @media (max-width: 768px) {
   .main {
     margin: 10px;
+  }
+  .LogInContainer {
+    max-width: 350px;
+  }
+  .crossButton {
+    margin: 5px 0px 0px 310px;
   }
 }

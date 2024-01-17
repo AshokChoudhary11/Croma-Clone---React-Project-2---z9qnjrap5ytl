@@ -69,17 +69,17 @@ const CheckOut = () => {
           body: JSON.stringify({
             addressType: "HOME",
             address: {
-              street: "123 Main St",
-              city: "Anytown",
-              state: "CA",
-              country: "USA",
-              zipCode: "12345",
+              street: parseUserLocation?.Street,
+              city: parseUserLocation?.City,
+              state: parseUserLocation?.State,
+              country: parseUserLocation?.Country,
+              zipCode: parseUserLocation?.Zipcode,
             },
           }),
         }
       );
       const data = await responce.json();
-      console.log(data);
+      // console.log(data);
       if (responce.status >= 400) {
         toast.error(`${data.message}`, {
           position: "bottom-right",
@@ -153,10 +153,11 @@ const CheckOut = () => {
                 className={Style.CardContainer}
                 onSubmit={MaltipalProductPaynow}
               >
-                <div>Card Number</div>
+                <div className={Style.cardInputHeading}>Card Number</div>
                 <input
+                  type="number"
                   className={Style.CardNumber}
-                  placeholder="Enter 16 digit card number"
+                  placeholder="Enter card number hear"
                   pattern="[0-9]{16}"
                   required
                   onChange={setCardNumber}
@@ -165,6 +166,7 @@ const CheckOut = () => {
                   <div>
                     <label>Expiry</label>
                     <input
+                      type="text"
                       className={Style.detailInput}
                       placeholder="MM/YY"
                       pattern="\d{2}\/\d{4}"
@@ -175,6 +177,7 @@ const CheckOut = () => {
                   <div>
                     <label>CVV</label>
                     <input
+                      type="number"
                       className={Style.detailInput}
                       placeholder="CVV"
                       pattern="[0-9]{3}"
@@ -210,10 +213,12 @@ const CheckOut = () => {
                 Shipping Address <span className={Style.AddressType}>Home</span>
               </div>
               <div className={Style.address}>
-                {parseUserLocation?.Address}
-                {parseUserLocation?.State}
-                {parseUserLocation?.Pincode}
+                {parseUserLocation?.Street}
               </div>
+              <div className={Style.address}>{parseUserLocation?.City},
+                {parseUserLocation?.State}</div>
+              <div className={Style.address}>{parseUserLocation?.Zipcode}</div>
+
             </div>
           </div>
           <div className={Style.AmountDetails}>

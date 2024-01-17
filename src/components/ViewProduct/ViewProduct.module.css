@@ -54,9 +54,43 @@
   margin-bottom: 15px;
   margin-top: 12px;
 }
+.ExtraDiscount {
+  background: #cffff3;
+  border-radius: 518px;
+  border: none;
+  padding: 6px 16px;
+  color: #088466;
+  font-weight: 700;
+  font-size: 12px !important;
+  line-height: 20px;
+  min-height: 32px;
+  margin-right: 0;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin-bottom: 0.4rem;
+}
+.hrline {
+  border-top: 1px solid gray;
+}
+.mrp {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+  margin: 10px 0px;
+}
+.total_price {
+  color: gray;
+  text-decoration: line-through;
+}
+.saveDiscount {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
 .ProductRating {
   font-size: 16px;
-  color: aqua;
+  color: #12daa8;
   margin-bottom: 8px;
   display: flex;
   align-items: center;
@@ -71,11 +105,22 @@
   font-size: 12px;
   margin-bottom: 10px;
 }
+.deliveryAddress {
+  background-color: #353535;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 10px;
+  margin-top: 10px;
+}
+a {
+  color: #12daa8;
+}
 .DeliveryAddress {
-  font-size: 16px;
+  font-size: 14px;
+  margin-bottom: 6px;
 }
 .StanderdDelivery {
-  font-size: 16px;
+  font-size: 14px;
 }
 .KeyFeatures {
   width: 100%;
@@ -140,7 +185,7 @@ textarea {
   border: none;
 }
 .SubmitReview:hover {
-  background-color: aqua;
+  background-color: #12daa8;
   cursor: pointer;
 }
 .button {
@@ -152,7 +197,7 @@ textarea {
   padding: 10px 55px;
   border: none;
   border-radius: 8px;
-  background-color: aqua;
+  background-color: #12daa8;
   font-size: 16px;
 }
 .button button:hover {
@@ -216,9 +261,12 @@ textarea {
     font-weight: 500;
     margin: 10px;
   }
+  .ExtraDiscount {
+    margin: 0 0 0 10px;
+  }
   .ProductRating {
     font-size: 16px;
-    color: aqua;
+    color: #12daa8;
     margin: 10px;
   }
   .ProductPrice {
@@ -230,12 +278,15 @@ textarea {
     font-size: 12px;
     margin: 0 0 10px 10px;
   }
+  .mrp {
+    margin: 10px 0 10px 10px;
+  }
   .deliveryAddress {
     background-color: rgb(50, 50, 50);
     padding: 8px 8px 8px 12px;
     border: none;
     border-radius: 8px;
-    margin: 10px;
+    margin: 10px 0px;
   }
   .DeliveryAddress {
     font-size: 14px;
@@ -276,7 +327,7 @@ textarea {
     padding: 40px;
   }
   textarea {
-    width: 50%;
+    width: 100%;
     border: 1px solid gray;
     border-radius: 5px;
     padding: 5px;
@@ -285,14 +336,14 @@ textarea {
     background-color: black;
   }
   .SubmitReview {
-    width: 200px;
+    width: 100px;
     padding: 10px;
     border-radius: 5px;
     font-size: 14px;
     border: none;
   }
   .SubmitReview:hover {
-    background-color: aqua;
+    background-color: #12daa8;
     cursor: pointer;
   }
   .button {
