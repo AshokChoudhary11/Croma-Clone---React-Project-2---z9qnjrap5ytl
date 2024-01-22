@@ -5,18 +5,21 @@ import { useSearchParams } from "react-router-dom";
 import { TailSpin } from "react-loader-spinner";
 
 const AllProduct = () => {
-  const [ProductList, SetProductList] = useState([]);
+  const [ProductList, setProductList] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [updatedlist, setupdatedlist] = useState([]);
+  const [sortedProductList, setSortedProductList] = useState([]);
+  const [sortOrder, setSortOrder] = useState();
+  const [range, setRange] = useState(135000);
+  const [ratting, setRatting] = useState(3);
+  const [sellerTag, setSellerTag] = useState("");
+  const [applyFilter, setApplyFilter] = useState(false);
   const [searchParams] = useSearchParams();
   const searchProductName = searchParams.get("product_name");
-  const [sortedProductList, setSortedProductList] = useState([]);
-  const [sortOrder, setSortOrder] = useState("ascending");
 
-  const handleProductList = async (searchName) => {
+  const fetchProductList = async (searchName) => {
     setLoading(true);
     try {
-      const responce = await fetch(
+      const response = await fetch(
         `https://academics.newtonschool.co/api/v1/ecommerce/electronics/products?limit=1000${
           searchName && `&search={"name":"${searchName}"}`
         }`,
@@ -27,16 +30,13 @@ const AllProduct = () => {
           },
         }
       );
-      const parseData = await responce.json();
-      console.log(parseData.data);
-      if (responce.status >= 400) {
+      const parseData = await response.json();
+      if (response.status >= 400) {
         console.log(parseData.message || "Product not Found");
-        SetProductList([]);
+        setProductList([]);
         return;
       }
-      SetProductList(parseData.data);
-      console.log(ProductList);
-      // setLoading(false);
+      setProductList(parseData.data);
     } catch (err) {
       console.log(err);
     } finally {
@@ -44,28 +44,41 @@ const AllProduct = () => {
     }
   };
 
-  useEffect(() => {
-    handleProductList(searchProductName);
-  }, [searchParams]);
-  const sortProducts = () => {
-    // Create a copy of the original productList to avoid mutating state directly
-    const sortedList = [...ProductList];
-    sortedList.sort((a, b) => {
-      if (sortOrder === "ascending") {
-        return a.price - b.price;
-      } else {
-        return b.price - a.price;
-      }
-    });
-    console.log(sortedList, "sortedList");
-    // @ts-ignore
-    setSortedProductList([...sortedList]);
-    // Toggle the sort order for the next click
-    setSortOrder(sortOrder === "ascending" ? "descending" : "ascending");
+  const handleApplyFilter = async () => {
+    setApplyFilter(true);
+
+    try {
+      const filteredList = ProductList.filter(
+        (product) =>
+          parseFloat(product.price) <= parseFloat(range) &&
+          (sellerTag ? product.sellerTag === sellerTag : true)
+        // parseFloat(product.rating) >= parseFloat(ratting)
+      );
+      console.log({ filteredList });
+
+      const sortedList = [...filteredList];
+      sortedList.sort((a, b) => {
+        if (sortOrder === "ascending") {
+          return a.price - b.price;
+        } else {
+          return b.price - a.price;
+        }
+      });
+
+      setSortedProductList(sortedList);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setApplyFilter(false);
+    }
   };
 
+  useEffect(() => {
+    fetchProductList(searchProductName);
+  }, [searchParams ,sortOrder]);
+
   return (
-    <div>
+    <div className={Style.mainContainer}>
       {loading && (
         <div className={Style.loading}>
           <TailSpin
@@ -80,15 +93,63 @@ const AllProduct = () => {
           />
         </div>
       )}
-      {/* <button className={Style.shorbutton} onClick={sortProducts}>
-        {sortOrder === "ascending" ? "lowToHigh" : "highToLow"}
-      </button> */}
-      {ProductList && ProductList.length === 0 && (
-        <p className={Style.productNotFount}>Products not found!</p>
-      )}
-      {sortedProductList.length > 0
-        ? sortedProductList.map((product) => <ProductCard product={product} />)
-        : ProductList.map((product) => <ProductCard product={product} />)}
+      <div className={Style.AllProductContainer}>
+        <div className={Style.ProductSection}>
+          <div className={Style.FilterSection}>
+            <div className={Style.filterBox}>
+              <div className={Style.priceRange}>
+                <div>Price</div>
+                <div>{range}</div>
+              </div>
+              <input
+                type="range"
+                className={Style.prevision_slider}
+                min={0}
+                max={150000}
+                value={range}
+                onChange={(e) => setRange(e.target.value)}
+              />
+            </div>
+            <div className={Style.filterBox}>
+              <div>Rating</div>
+              <input
+                type="range"
+                className={Style.prevision_slider}
+                min={0}
+                max={5}
+                value={ratting}
+                onChange={(e) => setRatting(e.target.value)}
+              />
+            </div>
+            <div className={Style.sellertage}>
+              <div>Seller Tag</div>
+              <select className={Style.selecttage} onChange={(e) => setSellerTag(e.target.value)}>
+                <option value="">All Sellers</option>
+                <option value="top rated">Top Rated</option>
+                <option value="best seller">Best Seller</option>
+                <option value="trending">Trending</option>
+                <option value="new arrival">New arrival</option>
+              </select>
+            </div>
+            
+            <button className={Style.applyButton} onClick={handleApplyFilter}>Apply Filters</button>
+            <select className={Style.selecttage} onChange={(e) => setSortOrder(e.target.value)}>
+              <option value="ascending">Low To High</option>
+              <option value="descending">High To Low</option>
+            </select>
+          </div>
+          {ProductList && ProductList.length === 0 && (
+            <p className={Style.productNotFount}>Products not found!</p>
+          )}
+          {sortedProductList.length > 0
+            ? sortedProductList.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))
+            : ProductList.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+        </div>
+      </div>
     </div>
   );
 };
