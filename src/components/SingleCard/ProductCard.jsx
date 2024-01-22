@@ -9,20 +9,19 @@ import StarIcon from "@mui/icons-material/Star";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Image404 from "../../assets/2e60079f1e36b5c7681f0996a79e8af4.jpg"
+import Image404 from "../../assets/2e60079f1e36b5c7681f0996a79e8af4.jpg";
 
 import { useNavigate } from "react-router-dom";
 import { getRandomDecimal } from "../../utils/data";
 import Login from "../LogIn/Login";
 
-const ProductCard = ({ product,setShowLoginPage }) => {
+const ProductCard = ({ product, setShowLoginPage }) => {
   const rating = getRandomDecimal();
   const [wishList, setWishList] = useState(false);
   const [showFallbackImage, setShowFallbackImage] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const UserLocation = localStorage.getItem("locationDetails");
   const parseUserLocation = JSON.parse(UserLocation);
-  console.log("location", parseUserLocation);
   const navigate = useNavigate();
   const toViewProduct = () => {
     navigate(`/Product/${product._id}`);
@@ -84,17 +83,21 @@ const ProductCard = ({ product,setShowLoginPage }) => {
     }
   };
   useEffect(() => {
-  if (product.displayImage) {
-    setShowFallbackImage(false);
-  }
-},[product]);
+    if (product.displayImage) {
+      setShowFallbackImage(false);
+    }
+  }, [product]);
   return (
     <>
       <div className={Style.ProductContainer} onClick={toViewProduct}>
         <div className={Style.ProductImg}>
-          <img src={showFallbackImage ? Image404 : product.displayImage} alt="Product Image" onError={() => {
+          <img
+            src={showFallbackImage ? Image404 : product.displayImage}
+            alt="Product Image"
+            onError={() => {
               setShowFallbackImage(true);
-            }} />
+            }}
+          />
           <div className={Style.compare}>
             <CheckBoxOutlineBlankIcon />
             COMPARE

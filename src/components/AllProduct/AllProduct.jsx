@@ -12,7 +12,6 @@ const AllProduct = () => {
   const [range, setRange] = useState(135000);
   const [ratting, setRatting] = useState(3);
   const [sellerTag, setSellerTag] = useState("");
-  const [applyFilter, setApplyFilter] = useState(false);
   const [searchParams] = useSearchParams();
   const searchProductName = searchParams.get("product_name");
 
@@ -45,37 +44,32 @@ const AllProduct = () => {
   };
 
   const handleApplyFilter = async () => {
-    setApplyFilter(true);
-
-    try {
-      const filteredList = ProductList.filter(
-        (product) =>
-          parseFloat(product.price) <= parseFloat(range) &&
-          (sellerTag ? product.sellerTag === sellerTag : true)
-        // parseFloat(product.rating) >= parseFloat(ratting)
-      );
-      console.log({ filteredList });
-
-      const sortedList = [...filteredList];
+    const filteredList = ProductList.filter(
+      (product) =>
+        parseFloat(product.price) <= parseFloat(range) &&
+        (sellerTag ? product.sellerTag === sellerTag : true)
+      // parseFloat(product.rating) >= parseFloat(ratting)
+    );
+    const sortedList = [...filteredList];
+    console.log("Updated");
+    setSortedProductList(
       sortedList.sort((a, b) => {
         if (sortOrder === "ascending") {
           return a.price - b.price;
         } else {
           return b.price - a.price;
         }
-      });
-
-      setSortedProductList(sortedList);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setApplyFilter(false);
-    }
+      })
+    );
   };
 
   useEffect(() => {
     fetchProductList(searchProductName);
-  }, [searchParams ,sortOrder]);
+  }, [searchParams]);
+
+  useEffect(() => {
+    handleApplyFilter();
+  }, [sortOrder]);
 
   return (
     <div className={Style.mainContainer}>
@@ -143,10 +137,10 @@ const AllProduct = () => {
           )}
           {sortedProductList.length > 0
             ? sortedProductList.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard key={product._id} product={product} />
               ))
             : ProductList.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard key={product._id} product={product} />
               ))}
         </div>
       </div>

@@ -11,12 +11,10 @@ import { useNavigate } from "react-router-dom";
 import { CartValue } from "../App";
 import Login from "./LogIn/Login.jsx";
 
-
 function Navbar() {
   const { cartnum, setCartNum } = useContext(CartValue);
   const [searchValue, setSearchValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-
 
   const navigate = useNavigate();
   const UserLocation = localStorage.getItem("locationDetails");
@@ -51,26 +49,28 @@ function Navbar() {
     fontSize: "16px",
   };
   const getCartItemNumber = async () => {
-    try {
-      const responce = await fetch(
-        `https://academics.newtonschool.co/api/v1/ecommerce/cart`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${parseUserDetails.token}`,
-            projectId: "z9qnjrap5ytl",
-            "Content-Type": "application/json",
-          },
+    if (parseUserDetails?.token) {
+      try {
+        const responce = await fetch(
+          `https://academics.newtonschool.co/api/v1/ecommerce/cart`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${parseUserDetails.token}`,
+              projectId: "z9qnjrap5ytl",
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const parseData = await responce.json();
+        if (responce.status >= 400) {
+          console.log(parseData.message || "Product not Found");
+          return;
         }
-      );
-      const parseData = await responce.json();
-      if (responce.status >= 400) {
-        console.log(parseData.message || "Product not Found");
-        return;
+        setCartNum(parseData?.data?.items.length);
+      } catch (err) {
+        console.log(err);
       }
-      setCartNum(parseData?.data?.items.length);
-    } catch (err) {
-      console.log(err);
     }
   };
   useEffect(() => {
@@ -139,12 +139,9 @@ function Navbar() {
             <p className={style.cartnumber}>{cartnum}</p>
           </div>
         </div>
-
       </div>
       <Login isOpen={isOpen} onClose={handleCloseModal} />
-      
     </header>
-    
   );
 }
 
