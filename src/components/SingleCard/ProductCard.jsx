@@ -82,17 +82,18 @@ const ProductCard = ({ product, setShowLoginPage }) => {
       console.log(err);
     }
   };
-  useEffect(() => {
-    if (product.displayImage) {
-      setShowFallbackImage(false);
-    }
-  }, [product]);
+  // useEffect(() => {
+  //   if (product.displayImage) {
+  //     setShowFallbackImage(false);
+  //   }
+  // }, [product]);
   return (
     <>
       <div className={Style.ProductContainer} onClick={toViewProduct}>
         <div className={Style.ProductImg}>
           <img
-            src={showFallbackImage ? Image404 : product.displayImage}
+            src={!product.displayImage ? Image404 : product.displayImage}
+
             alt="Product Image"
             onError={() => {
               setShowFallbackImage(true);

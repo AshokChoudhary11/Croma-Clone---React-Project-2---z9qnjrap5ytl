@@ -119,6 +119,7 @@ const CheckOut = () => {
   const gotofeatureUpdate = () => {
     navigate("/UpdateSoon");
   };
+
   return (
     <div className={Style.ContentWrraper}>
       <div className={Style.leftSection}>
@@ -212,13 +213,11 @@ const CheckOut = () => {
               <div className={Style.addressHeading}>
                 Shipping Address <span className={Style.AddressType}>Home</span>
               </div>
+              <div className={Style.address}>{parseUserLocation?.Street}</div>
               <div className={Style.address}>
-                {parseUserLocation?.Street}
+                {parseUserLocation?.City},{parseUserLocation?.State}
               </div>
-              <div className={Style.address}>{parseUserLocation?.City},
-                {parseUserLocation?.State}</div>
               <div className={Style.address}>{parseUserLocation?.Zipcode}</div>
-
             </div>
           </div>
           <div className={Style.AmountDetails}>

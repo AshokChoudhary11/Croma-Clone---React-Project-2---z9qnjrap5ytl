@@ -21,6 +21,7 @@ import { createContext, useState } from "react";
 import BrandCategory from "./components/Pages/BrandCategory";
 import MyProfile from "./components/Pages/MyProfile";
 import { ToastContainer } from "react-toastify";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 export const CartValue = createContext();
 
@@ -39,14 +40,49 @@ function App() {
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/Login" element={<Login />} />
           <Route path="/Profile" element={<Profile />} />
-          <Route path="/wishList" element={<WishList />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route
+            path="/wishList"
+            element={
+              <ProtectedRoute>
+                <WishList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <ProtectedRoute>
+                <Cart />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/udateAddress" element={<UpdateAddress />} />
-          <Route path="/checkOut" element={<CheckOut />} />
+          <Route
+            path="/checkOut"
+            element={
+              <ProtectedRoute>
+                <CheckOut />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/UpdateSoon" element={<FeatureUpdateSoon />} />
-          <Route path="/MyOrder" element={<MyOrder />} />
+          <Route
+            path="/MyOrder"
+            element={
+              <ProtectedRoute>
+                <MyOrder />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/brandPage/:brand" element={<BrandCategory />} />
-          <Route path="/Profile/edit-Profile" element={<MyProfile />} />
+          <Route
+            path="/Profile/edit-Profile"
+            element={
+              <ProtectedRoute>
+                <MyProfile />
+              </ProtectedRoute>
+            }
+          />
         </Routes>
         <ToastContainer />
       </AuthProvider>

@@ -1,9 +1,11 @@
 // @ts-nocheck
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Style from "./WishListProductCard.module.css";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { useNavigate } from "react-router-dom";
+import Image404 from "../../assets/2e60079f1e36b5c7681f0996a79e8af4.jpg"
+
 
 const WishListProductCard = ({ product, setList }) => {
   const userDetails = localStorage.getItem("userDetails");
@@ -49,6 +51,9 @@ const WishListProductCard = ({ product, setList }) => {
             projectId: "z9qnjrap5ytl",
             "Content-Type": "application/json",
           },
+          body: JSON.stringify({
+            quantity: 1,
+          }),
         }
       );
       const data = await responce.json();
@@ -57,21 +62,23 @@ const WishListProductCard = ({ product, setList }) => {
         alert(data.message);
         return;
       } else {
-        // setList((list) =>
-        //   list.filter((item) => item.products._id !== product._id)
-        // );
+        setList((list) =>
+          list.filter((item) => item.products._id !== product._id)
+        );
+        RemoveOne()
         alert("add Successfully!");
       }
     } catch (err) {
       console.log(err);
     }
   };
+  useEffect(() => {});
   return (
     <>
       <div className={Style.ProductContainer}>
         <div className={Style.ProductDetail}>
           <div className={Style.ProductImg}>
-            <img src={product.displayImage} alt="Product Image" />
+            <img src={!product.displayImage ? Image404 :product.displayImage} alt="Product Image" />
           </div>
           <div className={Style.ProductDetails}>
             <p className={Style.ProductName}>{product.name}</p>

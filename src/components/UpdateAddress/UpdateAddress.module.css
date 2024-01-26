@@ -5,6 +5,9 @@
   border-radius: 8px;
   padding: 10px;
   color: white;
+  @media screen and (max-width: 481px){
+    width: 370px;
+  }
 }
 .contentSection {
   display: flex;
@@ -57,7 +60,7 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.9);
 }
 .crossButton{
   margin: -5px 0px 0px 352px;
@@ -68,6 +71,9 @@ input {
   align-items: center;
   border-radius: 25px;
   background-color: gray;
+  @media screen and (max-width: 481px){
+    margin: -5px 0px 0px 322px;
+  }
 }
 .crossButton:hover{
   cursor: pointer;
