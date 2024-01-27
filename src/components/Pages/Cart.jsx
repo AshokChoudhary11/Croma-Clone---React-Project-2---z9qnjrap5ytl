@@ -95,7 +95,21 @@ const Cart = () => {
     navigate("/udateAddress");
   };
   const toCheckOut = () => {
-    navigate("/checkOut");
+    if (!parseUserLocation) {
+      toast.error("please fill delivery address", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      navigate("/udateAddress")
+    } else {
+      navigate("/checkOut");
+    }
   };
 
   return (
@@ -105,18 +119,18 @@ const Cart = () => {
           <h2>Your Cart</h2>
           <div className={Style.allSection}>
             <div className={Style.leftSection}>
-              <div className={Style.AddressSection}
-              >
+              <div className={Style.AddressSection}>
                 <div className={Style.ShippingAddressText}>
                   Shipping Address
                 </div>
                 <div className={Style.home}>Home</div>
+                <div className={Style.Address}>{parseUserLocation?.Street}</div>
                 <div className={Style.Address}>
-                  {parseUserLocation?.Street}
+                  {parseUserLocation?.City},{parseUserLocation?.State}
                 </div>
-                <div className={Style.Address}>{parseUserLocation?.City},
-                  {parseUserLocation?.State}</div>
-                <div className={Style.Address}>{parseUserLocation?.Zipcode}</div>
+                <div className={Style.Address}>
+                  {parseUserLocation?.Zipcode}
+                </div>
                 <a href="" onClick={toUpdateAddress}>
                   Edit Shipping Address
                 </a>
@@ -179,7 +193,6 @@ const Cart = () => {
           </div>
         </>
       )}
-
     </div>
   );
 };

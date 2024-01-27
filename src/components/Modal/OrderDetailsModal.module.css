@@ -98,4 +98,7 @@
   .modalContent {
     max-width: 90%;
   }
+  .details{
+    font-size: 12px;
+  }
 }

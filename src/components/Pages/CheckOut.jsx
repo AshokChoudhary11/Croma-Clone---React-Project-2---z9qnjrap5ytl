@@ -5,7 +5,7 @@ import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import CheckOutProductCard from "../Cards/CheckOutProductCard";
 import AddCardIcon from "@mui/icons-material/AddCard";
 import AccountBalanceTwoToneIcon from "@mui/icons-material/AccountBalanceTwoTone";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { CartValue } from "../../App";
@@ -13,8 +13,8 @@ import { CartValue } from "../../App";
 const CheckOut = () => {
   const [cartList, SetCartList] = useState("");
   const [allData, setAllData] = useState({});
-  const [cardNumber, setCardNumber] = useState("");
-  const [cardExpiry, setCardExpiry] = useState("");
+  const [cardNumber, setCardNumber] = useState(null);
+  const [cardExpiry, setCardExpiry] = useState(null);
   const [cvv, setCvv] = useState("");
   const { setCartNum } = useContext(CartValue);
 
@@ -56,68 +56,102 @@ const CheckOut = () => {
 
   const MaltipalProductPaynow = async (e) => {
     e.preventDefault();
-    try {
-      const responce = await fetch(
-        `https://academics.newtonschool.co/api/v1/ecommerce/order/convertCartToOrder`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${parseUserDetails.token}`,
-            projectId: "z9qnjrap5ytl",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            addressType: "HOME",
-            address: {
-              street: parseUserLocation?.Street,
-              city: parseUserLocation?.City,
-              state: parseUserLocation?.State,
-              country: parseUserLocation?.Country,
-              zipCode: parseUserLocation?.Zipcode,
+    if (cardNumber?.length !== 16) {
+      toast.error("fill complete card number", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    } else if (cvv?.length !== 3) {
+      toast.error("fill complete cvv number", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    } else if (cardExpiry?.length)
+      try {
+        const responce = await fetch(
+          `https://academics.newtonschool.co/api/v1/ecommerce/order/convertCartToOrder`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${parseUserDetails.token}`,
+              projectId: "z9qnjrap5ytl",
+              "Content-Type": "application/json",
             },
-          }),
+            body: JSON.stringify({
+              addressType: "HOME",
+              address: {
+                street: parseUserLocation?.Street,
+                city: parseUserLocation?.City,
+                state: parseUserLocation?.State,
+                country: parseUserLocation?.Country,
+                zipCode: parseUserLocation?.Zipcode,
+              },
+            }),
+          }
+        );
+        const data = await responce.json();
+        // console.log(data);
+        if (responce.status >= 400) {
+          toast.error(`${data.message}`, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          return;
+        } else {
+          toast.success("Order Place Successfully!", {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          setCartNum(0);
+          SetCartList("");
+          setCardNumber("");
+          setCardExpiry("");
+          setCvv("");
+          setTimeout(() => {
+            navigate("/MyOrder");
+          }, 2000);
         }
-      );
-      const data = await responce.json();
-      // console.log(data);
-      if (responce.status >= 400) {
-        toast.error(`${data.message}`, {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-        return;
-      } else {
-        toast.success("Order Place Successfully!", {
-          position: "bottom-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-        setCartNum(0);
-        SetCartList("");
-        setCardNumber("");
-        setCardExpiry("");
-        setCvv("");
-        setTimeout(() => {
-          navigate("/MyOrder");
-        }, 2000);
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
-    }
   };
   const gotofeatureUpdate = () => {
-    navigate("/UpdateSoon");
+    toast.error("Feature update soon", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   };
 
   return (
@@ -156,13 +190,21 @@ const CheckOut = () => {
               >
                 <div className={Style.cardInputHeading}>Card Number</div>
                 <input
-                  type="number"
+                  type="text"
                   className={Style.CardNumber}
-                  placeholder="Enter card number hear"
+                  placeholder="Enter card number here"
                   pattern="[0-9]{16}"
+                  maxLength="16"
                   required
-                  onChange={setCardNumber}
+                  onChange={(e) => {
+                    let inputValue = e.target.value;
+                    inputValue = inputValue.replace(/\D/g, "");
+                    inputValue = inputValue.slice(0, 16);
+                    e.target.value = inputValue;
+                    setCardNumber(inputValue);
+                  }}
                 />
+
                 <div className={Style.CardDetails}>
                   <div>
                     <label>Expiry</label>
@@ -170,20 +212,48 @@ const CheckOut = () => {
                       type="text"
                       className={Style.detailInput}
                       placeholder="MM/YY"
-                      pattern="\d{2}\/\d{4}"
+                      pattern="\d{2}\/\d{2}"
                       required
-                      onChange={setCardExpiry}
+                      onChange={(e) => {
+                        let inputValue = e.target.value;
+                        // Remove non-digit characters
+                        inputValue = inputValue.replace(/\D/g, "");
+                        // Add "/" after the first two digits (month)
+                        if (inputValue.length >= 2) {
+                          let month = inputValue.slice(0, 2);
+                          let year = inputValue.slice(2);
+                          // Check if month is greater than 12
+                          if (parseInt(month, 10) > 12) {
+                            year = month.slice(1);
+                            month = "12";
+                          }
+                          inputValue = `${month}/${year}`;
+                        }
+                        // Limit the total length to 5 characters (MM/YY)
+                        inputValue = inputValue.slice(0, 5);
+                        // Update the input value
+                        e.target.value = inputValue;
+                        // Set the card expiry using your setCardExpiry function
+                        setCardExpiry(inputValue);
+                      }}
                     />
                   </div>
                   <div>
                     <label>CVV</label>
                     <input
-                      type="number"
+                      type="text"
                       className={Style.detailInput}
                       placeholder="CVV"
                       pattern="[0-9]{3}"
+                      maxLength="3"
                       required
-                      onChange={setCvv}
+                      onChange={(e) => {
+                        let inputValue = e.target.value;
+                        inputValue = inputValue.replace(/\D/g, "");
+                        inputValue = inputValue.slice(0, 3);
+                        e.target.value = inputValue;
+                        setCvv(inputValue);
+                      }}
                     />
                   </div>
                 </div>

@@ -1,16 +1,16 @@
 // @ts-nocheck
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Style from "./CartProductCart.module.css";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import StarIcon from "@mui/icons-material/Star";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import { useNavigate } from "react-router-dom";
 import { CartValue } from "../../App";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getRandomDecimal } from "../../utils/data";
+import Image404 from "../../assets/2e60079f1e36b5c7681f0996a79e8af4.jpg";
 
 const CartProductCard = ({ product, SetCartList }) => {
+  const [showFallbackImage, setShowFallbackImage] = useState(false);
   const rating = getRandomDecimal();
   const { setCartNum } = useContext(CartValue);
   const userDetails = localStorage.getItem("userDetails");
@@ -121,12 +121,23 @@ const CartProductCard = ({ product, SetCartList }) => {
   //     console.log(err);
   //   }
   // };
-  console.log(product);
+  useEffect(() => {
+    if (product) {
+      setShowFallbackImage(false);
+    }
+  }, [product]);
+  // console.log(product);
   return (
     <>
       <div className={Style.ProductContainer}>
         <div className={Style.ProductImg}>
-          <img src={product.product.displayImage} alt="Product Image" />
+          <img
+            src={showFallbackImage ? Image404 : product.product.displayImage}
+            alt="Product Image"
+            onError={() => {
+              setShowFallbackImage(true);
+            }}
+          />
         </div>
         <div className={Style.ProductDetailsmain}>
           <div className={Style.ProductDetails}>

@@ -8,6 +8,7 @@ import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import StorefrontSharpIcon from "@mui/icons-material/StorefrontSharp";
 import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Menu = () => {
   const [showModal, setShowModal] = useState(false);
@@ -62,7 +63,16 @@ const Menu = () => {
     setShowModal(false);
   };
   const gotoUpdateSoon = () => {
-    Navigate("/UpdateSoon");
+    toast.error("Feature update soon", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   };
 
   return (

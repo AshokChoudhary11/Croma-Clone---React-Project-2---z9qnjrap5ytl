@@ -82,6 +82,18 @@ const ProductCard = ({ product, setShowLoginPage }) => {
       console.log(err);
     }
   };
+  const notClickeble = () => {
+    toast.error("Feature update soon", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  }
   // useEffect(() => {
   //   if (product.displayImage) {
   //     setShowFallbackImage(false);
@@ -99,7 +111,7 @@ const ProductCard = ({ product, setShowLoginPage }) => {
               setShowFallbackImage(true);
             }}
           />
-          <div className={Style.compare}>
+          <div className={Style.compare} onClick={notClickeble}>
             <CheckBoxOutlineBlankIcon />
             COMPARE
           </div>
@@ -134,7 +146,7 @@ const ProductCard = ({ product, setShowLoginPage }) => {
         <div className={Style.HeartIcon} onClick={AddWishList}>
           {wishList ? <FavoriteIcon /> : <FavoriteBorderIcon />}
         </div>
-        <div className={Style.ShareIcon}>
+        <div className={Style.ShareIcon} onClick={notClickeble}>
           <ShareIcon style={{ cursor: "not-allowed" }} />
         </div>
       </div>

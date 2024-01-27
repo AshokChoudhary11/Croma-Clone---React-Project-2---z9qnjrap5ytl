@@ -4,8 +4,8 @@ import Style from "./WishListProductCard.module.css";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { useNavigate } from "react-router-dom";
-import Image404 from "../../assets/2e60079f1e36b5c7681f0996a79e8af4.jpg"
-
+import Image404 from "../../assets/2e60079f1e36b5c7681f0996a79e8af4.jpg";
+import { toast } from "react-toastify";
 
 const WishListProductCard = ({ product, setList }) => {
   const userDetails = localStorage.getItem("userDetails");
@@ -27,12 +27,22 @@ const WishListProductCard = ({ product, setList }) => {
       const data = await responce.json();
       console.log(data);
       if (responce.status >= 400) {
-        alert(data.message);
+        toast.error(`{data.message}`, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         return;
       } else {
         setList((list) =>
           list.filter((item) => item.products._id !== product._id)
         );
+
         // setList(data);
       }
     } catch (err) {
@@ -59,26 +69,55 @@ const WishListProductCard = ({ product, setList }) => {
       const data = await responce.json();
       console.log(data);
       if (responce.status >= 400) {
-        alert(data.message);
+        toast.error(`{data.message}`, {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         return;
       } else {
         setList((list) =>
           list.filter((item) => item.products._id !== product._id)
         );
-        RemoveOne()
-        alert("add Successfully!");
+        RemoveOne();
+        toast.success("Add to cart Successfully!", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
       }
     } catch (err) {
       console.log(err);
     }
   };
-  useEffect(() => {});
+  const [showFallbackImage, setShowFallbackImage] = useState(false);
+  useEffect(() => {
+    if (product) {
+      setShowFallbackImage(false);
+    }
+  }, [product]);
   return (
     <>
       <div className={Style.ProductContainer}>
         <div className={Style.ProductDetail}>
           <div className={Style.ProductImg}>
-            <img src={!product.displayImage ? Image404 :product.displayImage} alt="Product Image" />
+            <img
+              src={showFallbackImage ? Image404 : product.displayImage}
+              alt="Product Image"
+              onError={() => {
+                setShowFallbackImage(true);
+              }}
+            />
           </div>
           <div className={Style.ProductDetails}>
             <p className={Style.ProductName}>{product.name}</p>

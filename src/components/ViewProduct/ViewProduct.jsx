@@ -230,6 +230,18 @@ const ViewProduct = () => {
       });
     }
   };
+  const notClickeble = () => {
+    toast.error("Feature update soon", {
+      position: "bottom-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  }
   // const AddReview = async (e) => {
   //   // e.stopPropagation();
   //   try {
@@ -296,7 +308,7 @@ const ViewProduct = () => {
                 <div onClick={AddWishList}>
                   {wishList ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                 </div>
-                <div>
+                <div onClick={notClickeble}>
                   <ShareOutlinedIcon style={{ cursor: "not-allowed" }} />
                 </div>
               </div>
@@ -304,11 +316,11 @@ const ViewProduct = () => {
               setShowFallbackImage(true);
             }}/>
               <div className={Style.CampareProduct}>
-                <div className={Style.disebleButton}>
+                <div className={Style.disebleButton} onClick={notClickeble}>
                   <input type="checkbox" />
                   Compare
                 </div>
-                <div className={Style.disebleButton}>
+                <div className={Style.disebleButton} onClick={notClickeble}>
                   <StoreIcon />
                   Connect To Store
                 </div>

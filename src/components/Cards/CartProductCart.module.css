@@ -107,7 +107,7 @@
   .ProductName {
     font-size: 14px;
     font-weight: 500;
-    height: 40px; /* Adjust the height as needed */
+    max-height: 36px; /* Adjust the height as needed */
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2; /* Limit the number of lines to 2 */
