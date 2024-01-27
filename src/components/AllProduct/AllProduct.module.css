@@ -47,10 +47,19 @@
 .priceRange{
   display: flex;
   justify-content: space-between;
+  font-size: 14px;
 }
 .filterBox{
   display: flex;
   flex-direction: column;
+}
+.rattingOption{
+  width: fit-content;
+  height: 26px;
+  padding: 0px 8px;
+  border-radius: 8px;
+  border: none;
+  background-color: gray;
 }
 .applyButton{
   margin: 0;

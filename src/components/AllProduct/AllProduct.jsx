@@ -90,31 +90,37 @@ const AllProduct = () => {
       <div className={Style.AllProductContainer}>
         <div className={Style.ProductSection}>
           <div className={Style.FilterSection}>
-            <div className={Style.filterBox}>
-              <div className={Style.priceRange}>
-                <div>Price</div>
-                <div>{range}</div>
-              </div>
-              <input
-                type="range"
-                className={Style.prevision_slider}
-                min={0}
-                max={150000}
-                value={range}
-                onChange={(e) => setRange(e.target.value)}
-              />
+          <div className={Style.sellertage}>
+          <div>Price : </div>
+
+          <div>
+            <div className={Style.priceRange}>
+              <div>0</div>
+              <div>{range}</div>
             </div>
-            <div className={Style.filterBox}>
-              <div>Rating</div>
-              <input
-                type="range"
-                className={Style.prevision_slider}
-                min={0}
-                max={5}
-                value={ratting}
-                onChange={(e) => setRatting(e.target.value)}
-              />
-            </div>
+            <input
+              type="range"
+              className={Style.prevision_slider}
+              min={0}
+              max={150000}
+              value={range}
+              onChange={(e) => setRange(e.target.value)}
+            />
+          </div>
+        </div>
+        <div className={Style.sellertage}>
+          <div>Rating :</div>
+          <select
+            className={Style.rattingOption}
+            onChange={(e) => setRatting(e.target.value)}
+          >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
             <div className={Style.sellertage}>
               <div>Seller Tag</div>
               <select className={Style.selecttage} onChange={(e) => setSellerTag(e.target.value)}>
